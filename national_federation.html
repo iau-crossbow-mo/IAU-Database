@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>National Federation</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+
+
+.athlete-letter th {
+    background-color: #d0e7ff; /* light blue */
+    padding: 8px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.alias {
+    color: grey;
+    font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<h1 id="federation-title">National Federation</h1>
+
+<div id="federation-info"></div>
+
+<!-- Tabs -->
+<div class="tabs">
+    <button id="tab-athletes" class="tab-button active">Athletes</button>
+    <button id="tab-clubs" class="tab-button">Clubs</button>
+</div>
+
+<!-- Tab content -->
+<div id="athlete-tab">
+    <div id="athlete-list"></div>
+</div>
+
+<div id="club-tab" style="display:none;">
+    <div id="club-list"></div>
+</div>
+
+<script src="js/papaparse.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    loadFederationPage();
+
+    // Tab switching
+    document.getElementById("tab-athletes").addEventListener("click", () => {
+        document.getElementById("athlete-tab").style.display = "block";
+        document.getElementById("club-tab").style.display = "none";
+        document.getElementById("tab-athletes").classList.add("active");
+        document.getElementById("tab-clubs").classList.remove("active");
+    });
+
+    document.getElementById("tab-clubs").addEventListener("click", () => {
+        document.getElementById("athlete-tab").style.display = "none";
+        document.getElementById("club-tab").style.display = "block";
+        document.getElementById("tab-clubs").classList.add("active");
+        document.getElementById("tab-athletes").classList.remove("active");
+    });
+});
+</script>
+
+</body>
+</html>

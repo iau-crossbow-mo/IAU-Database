@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Club</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+    /* Club logo styling */
+    #club-logo {
+        display: block;
+        margin-bottom: 20px;
+        max-width: 200px;
+        height: auto;
+    }
+
+    /* Separator row styling */
+    .letter-separator {
+        background-color: #eee;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    /* Optional: alias styling */
+    .alias {
+        color: grey;
+        font-style: italic;
+    }
+</style>
+</head>
+<body>
+
+<h1 id="club-title">Club</h1>
+
+<div id="club-info"></div>
+<img id="club-logo" src="" alt="Club Logo" />
+
+<div id="athlete-list"></div>
+
+<script src="js/papaparse.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    if (typeof loadClubPage === "function") {
+        loadClubPage();
+    }
+});
+
+// Helper: set club logo dynamically (replace with actual URL logic in JS)
+function setClubLogo(url) {
+    const logo = document.getElementById("club-logo");
+    if (logo) logo.src = url;
+}
+</script>
+
+</body>
+</html>

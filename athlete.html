@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Athlete Page</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+<body>
+
+<!-- ========================= -->
+<!-- Athlete Profile Header -->
+<!-- ========================= -->
+<header>
+    <div id="athlete-profile" class="athlete-profile">
+        <img id="athlete-photo" class="athlete-photo" src="" alt="Athlete photo">
+
+        <div class="athlete-info">
+            <h2 id="athlete-name"></h2>
+            <div id="athlete-country"></div>
+            <div id="athlete-club"></div>
+            <div id="athlete-gender"></div>
+        </div>
+    </div>
+</header>
+
+<!-- ========================= -->
+<!-- Filter Toggle Button -->
+<!-- ========================= -->
+<div class="top-actions">
+  <button id="filter-toggle" class="tag-action">Filters</button>
+  <button id="random-athlete" class="tag-action">Random Athlete</button>
+  <button id="random-competition" class="tag-action">Random Competition</button>
+</div>
+
+<!-- ========================= -->
+<!-- Sidebar Filter Panel -->
+<!-- ========================= -->
+<div id="filter-overlay" class="filter-overlay hidden"></div>
+
+<aside id="filter-sidebar" class="filter-sidebar">
+
+    <div class="sidebar-header">
+        <h2>Filters</h2>
+        <button id="close-filters" class="close-btn">✕</button>
+    </div>
+
+    <div class="filter-group">
+        <label>Year</label>
+        <div id="filter-year" class="filter-tags"></div>
+    </div>
+
+    <div class="filter-group">
+        <label>Level</label>
+        <div id="filter-level" class="filter-tags"></div>
+    </div>
+
+    <div class="filter-group">
+        <label>Category</label>
+        <div id="filter-category" class="filter-tags"></div>
+    </div>
+
+    <button id="clear-filters" class="clear-button">Clear All</button>
+
+</aside>
+
+<!-- ========================= -->
+<!-- Athlete Results -->
+<!-- ========================= -->
+<main>
+    <h2>Results</h2>
+    <div id="athlete-results-container"></div>
+</main>
+
+<!-- ========================= -->
+<!-- Footer -->
+<!-- ========================= -->
+<footer>
+    <a href="index.html">Back to Competition list</a>
+    <p>Athlete results page</p>
+</footer>
+
+<!-- ========================= -->
+<!-- JS Libraries -->
+<!-- ========================= -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+-->
+<script src="js/papaparse.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

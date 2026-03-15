@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Competitions</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h1>Competitions</h1>
+
+<div class="top-actions">
+  <button id="filter-toggle" class="tag-action">Filters</button>
+  <button id="random-athlete" class="tag-action">Random Athlete</button>
+  <button id="random-competition" class="tag-action">Random Competition</button>
+</div>
+
+<div id="competition-list"></div>
+
+<!-- Overlay -->
+<div id="filter-overlay" class="filter-overlay hidden"></div>
+
+<!-- Sliding Sidebar -->
+<aside id="filter-sidebar" class="filter-sidebar">
+
+  <div class="sidebar-header">
+    <h2>Filters</h2>
+    <button id="close-filters" class="close-btn">✕</button>
+  </div>
+
+  <div class="filter-group">
+    <label>Level</label>
+    <div id="filter-level" class="filter-tags"></div>
+  </div>
+
+  <div class="filter-group">
+    <label>Year</label>
+    <div id="filter-year" class="filter-tags"></div>
+  </div>
+
+  <div class="filter-group">
+    <label>Country</label>
+    <div id="filter-country" class="filter-tags"></div>
+  </div>
+
+  <div class="filter-group">
+    <label>Format</label>
+    <div id="filter-format" class="filter-tags"></div>
+  </div>
+
+  <button id="clear-filters" class="clear-button">Clear All</button>
+</aside>
+
+<!--
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+-->
+<script src="js/papaparse.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
