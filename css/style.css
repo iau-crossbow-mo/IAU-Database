@@ -75,11 +75,30 @@ a{
     display: flex;
     align-items: center;
     gap: 16px;
+    /*margin-bottom: 24px;*/
+	background-color: #000099;
+	color: #ffffff;
+	/*padding:20px;*/
+	/*border-radius:10px;*/
+}
+
+
+
+header {
+    display: flex;
+    align-items: left;
+	flex-direction: column;
+    gap: 16px;
     margin-bottom: 24px;
 	background-color: #000099;
 	color: #ffffff;
 	padding:20px;
 	border-radius:10px;
+}
+
+#club-title{
+	font-size: 30px;
+	font-weight: bold;
 }
 
 .athlete-profile a{
@@ -514,7 +533,7 @@ a{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:8px;
+    /*margin-bottom:8px;*/
 }
 
 .detail-athlete img{
@@ -830,3 +849,47 @@ a{
 .pdf-button:hover {
     background-color: #0000ff;
 }
+
+/*
+.year-nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.year-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    scroll-behavior: smooth;
+}
+
+.year-item {
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: #e0e0e0;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.year-item:hover {
+    background: #000099;
+    color: white;
+}
+
+.year-item.active {
+    background: #000099;
+    color: white;
+    font-weight: bold;
+}
+
+#year-prev, #year-next {
+    border: none;
+    background: #000099;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}*/

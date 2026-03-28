@@ -202,6 +202,75 @@ function loadCompetitionList() {
         populateFilter("filter-country", countries, "country");
         populateFilter("filter-format", formats, "format");
 
+	/*	
+		//Navbar novi kod
+		
+		const yearGroups = [
+    { label: "1982–1989", years: ["1982","1984","1986","1988","1989"] },
+    { label: "1990–1994", years: ["1990","1992","1993","1994"] },
+    // auto-generate later years:
+];
+
+const allYears = unique(competitions.map(c => getYear(c.date)))
+    .sort((a,b)=>a-b);
+
+// add individual years from 1995+
+allYears.forEach(y => {
+    if (y >= 1995) {
+        yearGroups.push({ label: y, years: [y] });
+    }
+});
+
+// current year auto-detect
+const currentYear = new Date().getFullYear().toString();
+
+// add ALL option
+yearGroups.push({ label: "All results", years: "ALL" });
+		
+		//Gotov navbar
+		
+		let activeYearIndex = yearGroups.findIndex(g =>
+    g.years !== "ALL" && g.years.includes(currentYear)
+);
+
+// fallback if current year not found
+if (activeYearIndex === -1) activeYearIndex = yearGroups.length - 2;
+		
+	//arrow navigation
+document.getElementById("year-prev").onclick = () => {
+    if (activeYearIndex > 0) {
+        activeYearIndex--;
+        triggerYearChange();
+    }
+};
+
+document.getElementById("year-next").onclick = () => {
+    if (activeYearIndex < yearGroups.length - 1) {
+        activeYearIndex++;
+        triggerYearChange();
+    }
+};
+
+function triggerYearChange() {
+    const group = yearGroups[activeYearIndex];
+
+    filters.year.clear();
+
+    if (group.years !== "ALL") {
+        group.years.forEach(y => filters.year.add(y));
+    }
+
+    render();
+    renderYearNav();
+}*/
+	
+		
+		
+		
+		
+		
+		
+		
         function applyFilters(data) {
             return data.filter(c => {
                 if (filters.level.size && !filters.level.has(c.level)) return false;
@@ -302,8 +371,44 @@ tr.appendChild(tdFormat);
         render();
     });
 	});
+	
+//	renderYearNav();
+//triggerYearChange(); // ensures latest year loads automatically
 }
 
+
+/*
+function renderYearNav() {
+    const container = document.getElementById("year-scroll");
+    container.innerHTML = "";
+
+    yearGroups.forEach((group, index) => {
+        const el = document.createElement("div");
+        el.className = "year-item" + (index === activeYearIndex ? " active" : "");
+        el.textContent = group.label;
+
+        el.onclick = () => {
+            activeYearIndex = index;
+
+            // update YEAR FILTER automatically
+            filters.year.clear();
+
+            if (group.years !== "ALL") {
+                group.years.forEach(y => filters.year.add(y));
+            }
+
+            render();
+            renderYearNav();
+        };
+
+        container.appendChild(el);
+    });
+
+    // auto-center active
+    document.querySelector(".year-item.active")
+        ?.scrollIntoView({ behavior: "smooth", inline: "center" });
+}
+*/
 
 // =========================
 // Render Affiliation (Country or Club)
@@ -844,11 +949,12 @@ ${!isBye ? `
 ${!isBye ? '<button class="details-btn">Hide Details</button>' : ""}
 
     <div class="detail-athlete">
-        <img class="detail-photo" src="photos/athletes/${match.athlete2_id || "default"}.png" onerror="this.src='photos/athletes/default.png'">
+	<div class="sets">${sets2}</div>
+        
         <div class="detail-name" style="${match.athlete2_id ? "" : "font-style:italic; color:#555;"}">
             ${match.athlete_name2} ${flag2 ? `<img class="flag" src="photos/flags/${flag2}.png">` : ""} ${match.points2}
         </div>
-        <div class="sets">${sets2}</div>
+     <img class="detail-photo" src="photos/athletes/${match.athlete2_id || "default"}.png" onerror="this.src='photos/athletes/default.png'">   
     </div>
 </div>` : ""}
 `;
@@ -863,7 +969,7 @@ document.addEventListener("click", e=>{
         const match = e.target.closest(".match");
         match.classList.toggle("open");
         const bracket = e.target.closest(".category-bracket");
-        setTimeout(()=>drawLines(bracket),200);
+       // setTimeout(()=>drawLines(bracket),200);
     }
     if(e.target.classList.contains("hide-btn")){
         const match = e.target.closest(".match");
@@ -1410,8 +1516,11 @@ function loadFederationPage() {
                     `National Federation – ${countryCode}`;
 
                 document.getElementById("federation-info").innerHTML =
-                    `${renderFlag(countryCode)} 
-                     <strong>Total athletes:</strong> ${athletesToDisplay.length}`;
+                    `
+					${renderFlag(countryCode)} </br>
+					<strong>Total athletes:</strong> ${athletesToDisplay.length}</br>
+					<strong>Total clubs:</strong> ${clubsToDisplay.length}
+					`;
 
                 athleteContainer.innerHTML = "";
                 clubContainer.innerHTML = "";
@@ -1599,8 +1708,8 @@ function loadClubPage() {
                     .sort((a,b) => a.athlete_name.localeCompare(b.athlete_name));
 
                 document.getElementById("club-title").textContent =
-                    `Club – ${clubName}`;
-
+                    `${clubName}`;
+				
                 document.getElementById("club-info").innerHTML =
                     `<strong>Total athletes:</strong> ${athletesToDisplay.length}`;
 
