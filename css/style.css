@@ -97,8 +97,21 @@ header {
 }
 
 #club-title{
+	font-size: 30px;tut
+	font-weight: bold;
+	color: #ffffff;
+}
+
+#federation-title{
 	font-size: 30px;
 	font-weight: bold;
+	color: #ffffff;
+}
+
+#competition-name{
+	font-size: 30px;
+	font-weight: bold;
+	color: #ffffff;
 }
 
 .athlete-profile a{
