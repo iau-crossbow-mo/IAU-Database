@@ -82,7 +82,7 @@ ENN2003GER;15. Eurocup Ennigerloh;GER;Ennigerloh;IC;8.6.2003;IR1800
 NC2003SUI;Swiss National Championships;SUI;First;NC;2.8.2003;IR900
 BC2003CZE;5th Bohemia Cup;CZE;Otrokovice;IC;3.8.2003;IR1800F
 CC2003IVA;8th Croatia Cup;CRO;Ivanic Grad;IC;7.9.2003;IR1800F
-ECI2003BEL;1st IAU European Indoor Championships;BEL;Kortrijk;CCH;9.11.2003;IR1200+F
+ECI2003BEL;1st IAU European Indoor Championships;BEL;Kortrijk;CCH;9.11.2003;IR1200F
 IC2004GOT;10. Gotzis Indoor Tournament;AUT;Gotzis;IC;20.3.2004;IR900i
 LT2004POZ;Invitational Tournament;CRO;Ivanic Grad;LT;16.5.2004;IR900
 IC2004AUT;Eurocup Innsbruck;AUT;Innsbruck;IC;23.5.2004;IR1800
@@ -99,13 +99,13 @@ IC2005AUT;Worldcup Innsbruck;AUT;Innsbruck;IC;7.5.2005;IR1800F
 ENN2005GER;17. Eurocup Ennigerloh;GER;Ennigerloh;IC;15.5.2005;IR1800
 NC2005FRA;French National Championships;FRA;Nantes;NC;5.6.2005;IR1800
 CC2005IVA;10th Croatia Cup;CRO;Ivanic Grad;IC;26.6.2005;IR1800F
-BC2005CZE;7th Bohemia Cup;CZE;Otrokovice;IC;17.7.2005;IR1800+F
+BC2005CZE;7th Bohemia Cup;CZE;Otrokovice;IC;17.7.2005;IR1800F
 CE2005NED;Van Gogh Bokaal;NED;Zundert;IC;10.8.2005;IR900
 ECH2005NED;7th IAU European Championships;NED;Zundert;CCH;13.8.2005;IR1800F
 NC2005SUI;Swiss National Championships;SUI;First;NC;10.9.2005;IR900
 LT2005ZGK;Zagreb Cup Indoor;CRO;Zagreb;LT;2.10.2005;IR900
-NCI2005CRO;Croatian National Championships;CRO;Vrbovec;NC;16.10.2005;IR1200+F
-ECI2005RUS;2nd IAU European Indoor Championships;RUS;Moscow;CCH;14.11.2005;IR1200+F
+NCI2005CRO;Croatian National Championships;CRO;Vrbovec;NC;16.10.2005;IR1200F
+ECI2005RUS;2nd IAU European Indoor Championships;RUS;Moscow;CCH;14.11.2005;IR1200F
 IC2006GOT;12. Gotzis Indoor Tournament;AUT;Gotzis;IC;18.3.2006;IR900i
 IC2006FRA;2er Master Arbalete;FRA;Romainville;IC;13.5.2006;IR900
 ENN2006GER;18. Eurocup Ennigerloh;GER;Ennigerloh;IC;4.6.2006;IR1800
@@ -117,7 +117,7 @@ CE2006AUT;Styria Cup;AUT;Steyr;IC;24.8.2006;IR900
 WCH2006AUT;13th IAU World Championships;AUT;Steyr;WCH;26.8.2006;IR1800F
 LT2006POZ;Invitational Tournament;CRO;Pozega;LT;1.10.2006;IR900
 IC2006ESB;1st Europa Cup;CRO;Slavonski Brod;IC;12.11.2006;IR1200F
-NCI2006CRO;Croatian National Championships;CRO;Slavonski Brod;NC;12.11.2006;IR1200+F
+NCI2006CRO;Croatian National Championships;CRO;Slavonski Brod;NC;12.11.2006;IR1200F
 IC2007GOT;13. Gotzis Indoor Tournament;AUT;Gotzis;IC;17.3.2007;IR900i
 LT2007SUI;Eroffnungsmatch;SUI;First;LT;6.5.2007;IR900
 ENN2007GER;19. Eurocup Ennigerloh;GER;Ennigerloh;IC;27.5.2007;IR1800
@@ -128,7 +128,7 @@ CE2007RUS;Russian Open Cup;RUS;Sankt Petersburg;IC;18.9.2007;IR900
 ECH2007RUS;8th IAU European Championships;RUS;Sankt Petersburg;CCH;22.9.2007;IR1800F
 IC2007HAN;Indoor Tournament;GER;Hannover;IC;27.10.2007;IR1200
 IC2007ESB;2nd Europa Cup;CRO;Slavonski Brod;IC;11.11.2007;IR1200F
-NCI2007CRO;Croatian National Championships;CRO;Pozega;NC;25.11.2007;IR1200+F
+NCI2007CRO;Croatian National Championships;CRO;Pozega;NC;25.11.2007;IR1200F
 IC2008GOT;Gotzis Indoor Tournament;AUT;Gotzis;IC;15.3.2008;IR900i
 IC2008GER;Hessen Cup;GER;Bad Homburg;IC;4.5.2008;IR1800
 LT2008KZZ;Open Krapina-Zagorje County Championship;CRO;Krusljevo Selo;LT;11.5.2008;IR900
@@ -139,11 +139,11 @@ CE2008SUI;FZO Cup;SUI;Weinfelden;IC;9.7.2008;IR900
 WCH2008SUI;14th IAU World Championships;SUI;Weinfelden;WCH;14.7.2008;IR1800F
 BC2008CZE;10th Bohemia Cup;CZE;Otrokovice;IC;9.8.2008;IR900
 IC2008ESB;3rd Europa Cup;CRO;Slavonski Brod;IC;9.11.2008;IR1200
-NCI2008CRO;Croatian National Championships;CRO;Dubrava;NC;23.11.2008;IR1200+F
+NCI2008CRO;Croatian National Championships;CRO;Dubrava;NC;23.11.2008;IR1200F
 IC2009GOT;Gotzis Indoor Tournament;AUT;Gotzis;IC;21.2.2009;IR900i
-NCI2009CRO;Croatian National Championships;CRO;Pozega;NC;8.3.2009;IR1200+F
+NCI2009CRO;Croatian National Championships;CRO;Pozega;NC;8.3.2009;IR1200F
 CE2009CRO;Malin Cup;CRO;Malinska;IC;26.3.2009;IR600
-ECI2009CRO;3rd IAU European Indoor Championships;CRO;Malinska;CCH;29.3.2009;IR1200+F
+ECI2009CRO;3rd IAU European Indoor Championships;CRO;Malinska;CCH;29.3.2009;IR1200F
 LT2009SUI;Eroffnungsmatch;SUI;First;LT;9.5.2009;IR900
 LT2009KZZ;Open Krapina-Zagorje County Championship;CRO;Krusljevo Selo;LT;17.5.2009;IR900
 IC2009GER;Mehrlanderkampf;GER;Zirndorf;IC;24.5.2009;IR1800
@@ -155,7 +155,7 @@ CE2009CZE;Otrokovice Cup;CZE;Otrokovice;IC;11.8.2009;IR900
 ECH2009CZE;9th IAU European Championships;CZE;Otrokovice;CCH;15.8.2009;IR1800F
 LT2009SUI2;Schlussmatch;SUI;First;LT;12.9.2009;IR900
 IC2009ESB;4th Europa Cup;CRO;Slavonski Brod;IC;8.11.2009;IR1200
-NCI2010CRO;Croatian National Championships;CRO;Dubrava;NC;28.3.2010;IR1200+F
+NCI2010CRO;Croatian National Championships;CRO;Dubrava;NC;28.3.2010;IR1200F
 LT2010SUI;Eroffnungsmatch;SUI;First;LT;25.4.2010;IR900
 ENN2010GER;22. Eurocup Ennigerloh;GER;Ennigerloh;IC;23.5.2010;IR1800
 NC2010FRA;French National Championships;FRA;Chabris;NC;13.6.2010;IR1800
@@ -168,7 +168,7 @@ IC2010SUI;Swiss Open National Championships;SUI;First;IC;31.7.2010;IR900
 CE2010FRA;City Cup of Avon;FRA;Avon;IC;1.9.2010;IR900
 WCH2010FRA;15th IAU World Championships;FRA;Avon;WCH;5.9.2010;IR1800F
 IC2010ESB;5th Europa Cup;CRO;Slavonski Brod;IC;3.10.2010;IR1200
-NCI2011CRO;Croatian National Championships;CRO;Ivanic Grad;NC;10.4.2011;IR1200+F
+NCI2011CRO;Croatian National Championships;CRO;Ivanic Grad;NC;10.4.2011;IR1200F
 LT2011SUI;Eroffnungsmatch;SUI;First;LT;1.5.2011;IR900
 LT2011KTJ;Grasevina Cup;CRO;Kutjevo;LT;8.5.2011;IR900
 LT2011POZ;Invitational Tournament;CRO;Dubrava;LT;29.5.2011;IR900
@@ -184,7 +184,7 @@ IC2011ESB;6th Europa Cup;CRO;Slavonski Brod;IC;2.10.2011;IR1200
 CE2011TPE;ROC Centennial Cup;TPE;Taoyuan;IC;22.11.2011;IR1800
 ACH2011TPE;6th IAU Asian Championships;TPE;Taoyuan;CCH;23.11.2011;IR1800old
 IC2012HUN;Hungarian Open;HUN;Budapest;IC;18.2.2012;IR600
-NCI2012CRO;Croatian National Championships;CRO;Pozega;NC;25.3.2012;IR1200+F
+NCI2012CRO;Croatian National Championships;CRO;Pozega;NC;25.3.2012;IR1200F
 IC2012GER;Mehrlanderkampf;GER;Stuttgart;IC;19.5.2012;IR1800
 LT2012VTR;VT Cup;CRO;Veliko Trgovisce;LT;27.5.2012;IR900
 AO2012AUT;3. Austria Open;AUT;Innsbruck;IC;9.6.2012;IR1800
@@ -197,7 +197,7 @@ WHC2012GER;Winsener-Heide Cup;GER;Winsen/Luhe;IC;22.7.2012;IR1800
 CE2012CRO;Kras Cup;CRO;Bratina;IC;14.8.2012;IR900
 WCH2012CRO;16th IAU World Championships;CRO;Bratina;WCH;18.8.2012;IR1800F
 IC2012ESB;7th Europa Cup;CRO;Slavonski Brod;IC;7.10.2012;IR1200
-NCI2013CRO;Croatian National Championships;CRO;Dubrava;NC;7.4.2013;IR1200+F
+NCI2013CRO;Croatian National Championships;CRO;Dubrava;NC;7.4.2013;IR1200F
 IC2013AUT;International Competition;AUT;Stockerau;IC;11.5.2013;IR1800F
 LT2013VTR;VT Cup;CRO;Veliko Trgovisce;LT;18.5.2013;IR900
 AO2013AUT;4. Austria Open;AUT;Innsbruck;IC;2.6.2013;IR1800
@@ -212,7 +212,7 @@ ECH2013AUT;11th IAU European Championships;AUT;Innsbruck;CCH;8.9.2013;IR1800F
 NC2013AUT;Austrian National Championships;AUT;Stockerau;NC;29.9.2013;IR900
 IC2013ESB;8th Europa Cup;CRO;Slavonski Brod;IC;13.10.2013;IR1200
 IC2014GER;Eurocup Hannover;GER;Hannover;IC;9.3.2014;IR1200
-NCI2014CRO;Croatian National Championships;CRO;Pisarovina;NC;6.4.2014;IR1200+F
+NCI2014CRO;Croatian National Championships;CRO;Pisarovina;NC;6.4.2014;IR1200F
 LT2014VTR;VT Cup;CRO;Veliko Trgovisce;LT;18.5.2014;IR900
 NC2014FRA;French National Championships;FRA;Doullens;NC;15.6.2014;IR1800
 AO2014AUT;5. Austria Open;AUT;Innsbruck;IC;22.6.2014;IR1800
@@ -224,7 +224,7 @@ NC2014GER;German National Championship;GER;Hannover;NC;26.7.2014;IR900
 CE2014GER;Frankfurt Cup;GER;Frankfurt am Main;IC;5.8.2014;IR900
 WCH2014GER;17th IAU World Championships;GER;Frankfurt am Main;WCH;10.8.2014;IR1800F
 IC2014ESB;9th Europa Cup;CRO;Slavonski Brod;IC;12.10.2014;IR1200
-NCI2015CRO;Croatian National Championships;CRO;Malinska;NC;29.3.2015;IR1200+F
+NCI2015CRO;Croatian National Championships;CRO;Malinska;NC;29.3.2015;IR1200F
 LT2015VTR;VT Cup;CRO;Veliko Trgovisce;LT;23.5.2015;IR900
 AO2015AUT;6. Austria Open;AUT;Innsbruck;IC;7.6.2015;IR1800
 NC2015FRA;French National Championships;FRA;Beaulieu;NC;14.6.2015;IR1800
@@ -236,7 +236,7 @@ WCH2015RUS;18th IAU World Championships;RUS;Ulan-Ude;WCH;24.8.2015;IR1800F
 NC2015GER;German National Championship;GER;Munich;NC;7.9.2015;IR900
 NC2015AUT;Austrian National Championships;AUT;Stockerau;NC;12.9.2015;IR900
 IC2015ESB;10th Europa Cup;CRO;Slavonski Brod;IC;4.10.2015;IR1200
-NCI2016CRO;Croatian National Championships;CRO;Pozega;NC;20.3.2016;IR1200+F
+NCI2016CRO;Croatian National Championships;CRO;Pozega;NC;20.3.2016;IR1200F
 IC2016FRA;Nations Cup;FRA;Thaon-les-Vosges;IC;8.5.2016;IR1800F
 LT2016POZ;City Cup of Bakar;CRO;Bakar;LT;27.5.2016;IR900
 NC2016FRA;French National Championships;FRA;Thaon-les-Vosges;NC;12.6.2016;IR1800
@@ -249,7 +249,7 @@ BC2016CZE;18th Bohemia Cup;CZE;Otrokovice;IC;31.7.2016;IR1800
 NC2016GER;German National Championship;GER;Munich;NC;5.9.2016;IR900
 IC2016ESB;11th Europa Cup;CRO;Slavonski Brod;IC;18.9.2016;IR1200
 NC2016AUT;Austrian National Championships;AUT;Stockerau;NC;2.10.2016;IR900
-NCI2017CRO;Croatian National Championships;CRO;Dubrava;NC;2.4.2017;IR1200+F
+NCI2017CRO;Croatian National Championships;CRO;Dubrava;NC;2.4.2017;IR1200F
 LT2017POZ;Invitational Tournament;CRO;Velika;LT;20.5.2017;IR900
 SRH2017GER;Hausen Cup;GER;Hausen;IC;28.5.2017;IR1800
 NC2017FRA;French National Championships;FRA;Antibes;NC;11.6.2017;IR1800
@@ -262,7 +262,7 @@ BC2017CZE;19th Bohemia Cup;CZE;Otrokovice;IC;30.7.2017;IR1800
 NC2017AUT;Austrian National Championships;AUT;Stockerau;NC;19.8.2017;IR900
 NC2017GER;German National Championship;GER;Kronau;NC;9.9.2017;IR900
 IC2017ESB;12th Europa Cup;CRO;Slavonski Brod;IC;1.10.2017;IR1200
-NCI2018CRO;Croatian National Championships;CRO;Ivanic Grad;NC;8.4.2018;IR1200+F
+NCI2018CRO;Croatian National Championships;CRO;Ivanic Grad;NC;8.4.2018;IR1200F
 SRH2018GER;Hausen Cup;GER;Hausen;IC;29.4.2018;IR1800
 LT2018GRA;Austrian ECH Qualifiers;AUT;Graschnitz;LT;20.5.2018;IR1800
 LT2018KOB;Austrian ECH Qualifiers;AUT;Koblach;LT;27.5.2018;IR1800
@@ -281,7 +281,7 @@ NC2018AUT;Austrian National Championships;AUT;Stockerau;NC;26.8.2018;IR900
 NC2018GER;German National Championship;GER;Kronau;NC;15.9.2018;IR900
 IC2018ESB;13th Europa Cup;CRO;Slavonski Brod;IC;13.10.2018;IR600
 WCF2018RUS;IAU World Cup Finals;RUS;Oryol;WC;9.12.2018;IR300
-NCI2019CRO;Croatian National Championships;CRO;Donja Stubica;NC;24.3.2019;IR1200+F
+NCI2019CRO;Croatian National Championships;CRO;Donja Stubica;NC;24.3.2019;IR1200F
 LT2019LTL;Outdoor Tournament;CZE;Litultovice;LT;27.4.2019;IR900
 LT2019SHL;Outdoor Tournament;CZE;Suche Lazce;LT;18.5.2019;IR900
 LT2019POZ;Invitational Tournament;CRO;Dubrava;LT;19.5.2019;IR900
