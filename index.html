@@ -7,7 +7,42 @@
 </head>
 <body>
 
-<h1>Competitions</h1>
+<h1>Main Dashboard</h1>
+
+<div class="tabs">
+  <button id="tab-competitions" class="tab-button active">Competitions</button>
+  <button id="tab-ranking" class="tab-button">World Ranking</button>
+  <button id="tab-federations" class="tab-button">National Federations</button>
+  <button id="tab-athletes" class="tab-button">Athletes</button>
+</div>
+
+<!-- COMPETITIONS TAB -->
+<div id="competitions-tab">
+
+  <div class="top-actions">
+    <button id="filter-toggle" class="tag-action">Filters</button>
+    <button id="random-athlete" class="tag-action">Random Athlete</button>
+    <button id="random-competition" class="tag-action">Random Competition</button>
+  </div>
+
+  <div id="competition-list"></div>
+
+</div>
+
+<!-- RANKING TAB -->
+<div id="ranking-tab" style="display:none;">
+  <div id="ranking-container"></div>
+</div>
+
+<!-- FEDERATIONS TAB -->
+<div id="federations-tab" style="display:none;">
+  <div id="federations-container"></div>
+</div>
+
+<!-- ATHLETES TAB -->
+<div id="athletes-tab" style="display:none;">
+  <div id="athletes-container"></div>
+</div>
 
 <div class="top-actions">
   <button id="filter-toggle" class="tag-action">Filters</button>

@@ -97,12 +97,18 @@ header {
 }
 
 #club-title{
-	font-size: 30px;tut
+	font-size: 30px;
 	font-weight: bold;
 	color: #ffffff;
 }
 
 #federation-title{
+	font-size: 30px;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+#ranking-title{
 	font-size: 30px;
 	font-weight: bold;
 	color: #ffffff;

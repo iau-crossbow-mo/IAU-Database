@@ -1,4 +1,5 @@
 console.log("main.js loaded");
+
 // =========================
 // Helpers
 // =========================
@@ -32,6 +33,17 @@ function createCheckbox(containerId, value, label) {
 
     container.appendChild(cb);
     container.appendChild(lbl);
+}
+
+let countryMap = {};
+
+function loadCountries(callback) {
+    parseCSV("data/countries.csv", data => {
+        data.forEach(c => {
+            countryMap[c.code] = c.name;
+        });
+        callback();
+    });
 }
 // Render country flag
 function renderFlag(countryCode) {
@@ -98,7 +110,9 @@ const FORMAT_COLUMNS = {
     IR1800: ['rank','athlete_id','country','category','d1_d1','d1_d2','d1_d3','d1_total','d2_d1','d2_d2','d2_d3','d2_total','total','rings','tens'],
     IR1800F: ['rank','athlete_id','country','category','d1_d1','d1_d2','d1_d3','d1_total','d2_d1','d2_d2','d2_d3','d2_total','total','rings','tens','final','final_total'],
     IR1800old: ['rank','athlete_id','country','category','d1_d1','d1_d2','d1_d3','d1_total','d2_d1','d2_d2','d2_d3','d2_total','total','rings','tens'],
-    IR1800Fold: ['rank','athlete_id','country','category','d1_d1','d1_d2','d1_d3','d1_total','d2_d1','d2_d2','d2_d3','d2_total','total','rings','tens','final','final_total']
+    IR1800Fold: ['rank','athlete_id','country','category','d1_d1','d1_d2','d1_d3','d1_total','d2_d1','d2_d2','d2_d3','d2_total','total','rings','tens','final','final_total'],
+	Eliminations: ['rank','athlete_id','country','category','d1_d1','d1_d2','d1_d3','d1_total'],
+	Master: ['rank','athlete_id','country','category','d1_d1','d1_d2','d1_total','d2_d1','d2_d2','d2_d3']
 };
 
 const FORMAT_LABELS = {
@@ -115,7 +129,9 @@ const FORMAT_LABELS = {
     IR1800: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"65m", d1_d2:"50m", d1_d3:"35m", d1_total:"IR900", d2_d1:"35m", d2_d2:"50m", d2_d3:"65m", d2_total:"IR900", total:"IR1800", rings:"R10", tens:"10" },
     IR1800F: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"65m", d1_d2:"50m", d1_d3:"35m", d1_total:"IR900", d2_d1:"35m", d2_d2:"50m", d2_d3:"65m", d2_total:"IR900", total:"IR1800", rings:"R10", tens:"10", final:"F", final_total:"Total" },
     IR1800old: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"65m", d1_d2:"50m", d1_d3:"35m", d1_total:"IR900", d2_d1:"65m", d2_d2:"50m", d2_d3:"35m", d2_total:"IR900", total:"IR1800", rings:"R10", tens:"10" },
-    IR1800Fold: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"65m", d1_d2:"50m", d1_d3:"35m", d1_total:"IR900", d2_d1:"65m", d2_d2:"50m", d2_d3:"35m", d2_total:"IR900", total:"IR1800", rings:"R10", tens:"10", final:"F", final_total:"Total" }
+    IR1800Fold: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"65m", d1_d2:"50m", d1_d3:"35m", d1_total:"IR900", d2_d1:"65m", d2_d2:"50m", d2_d3:"35m", d2_total:"IR900", total:"IR1800", rings:"R10", tens:"10", final:"F", final_total:"Total" },
+	Eliminations: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"Q Round", d1_d2:"R32", d1_d3:"R16", d1_total:"Q Rank" },
+	Master: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"50m", d1_d2:"50m", d1_total:"IR600", d2_d1:"QF", d2_d2:"SF", d2_d3:"Final" },
 };
 
 const FORMAT_DISPLAY_NAMES = {
@@ -135,6 +151,43 @@ const FORMAT_DISPLAY_NAMES = {
     IR1800Fold: "Double Classic (Old) + Final"
 };
 
+let aliasToMain = {};
+let mainToAliases = {};
+
+
+let aliasMap = {};
+
+function loadAliases(callback) {
+    parseCSV("data/athlete_aliases.csv", data => {
+
+        aliasToMain = {};
+        mainToAliases = {};
+
+        data.forEach(row => {
+            const main = row.main_id?.trim();
+            const alias = row.alias_id?.trim();
+            if (!main || !alias) return;
+
+            aliasToMain[alias] = main;
+
+            if (!mainToAliases[main]) {
+                mainToAliases[main] = [];
+            }
+            mainToAliases[main].push(alias);
+        });
+
+        callback?.();
+    });
+}
+
+function resolveAthleteId(id) {
+    return aliasToMain[id] || id;
+}
+
+function getAllAthleteIds(id) {
+    const main = resolveAthleteId(id);
+    return new Set([main, ...(mainToAliases[main] || [])]);
+}
 // =========================
 // Index Page: Competition List
 // =========================
@@ -376,6 +429,275 @@ tr.appendChild(tdFormat);
 //triggerYearChange(); // ensures latest year loads automatically
 }
 
+function setupIndexTabs() {
+    const tabs = {
+        competitions: document.getElementById("competitions-tab"),
+        ranking: document.getElementById("ranking-tab"),
+        federations: document.getElementById("federations-tab"),
+        athletes: document.getElementById("athletes-tab")
+    };
+
+    const buttons = {
+        competitions: document.getElementById("tab-competitions"),
+        ranking: document.getElementById("tab-ranking"),
+        federations: document.getElementById("tab-federations"),
+        athletes: document.getElementById("tab-athletes")
+    };
+
+    Object.keys(buttons).forEach(key => {
+        buttons[key].addEventListener("click", () => {
+
+            // Hide all tabs
+            Object.values(tabs).forEach(t => t.style.display = "none");
+            Object.values(buttons).forEach(b => b.classList.remove("active"));
+
+            // Show selected
+            tabs[key].style.display = "block";
+            buttons[key].classList.add("active");
+        });
+    });
+}
+
+function renderRankingTab() {
+    parseCSV("data/world_ranking.csv", rankings => {
+        parseCSV("data/competitions.csv", competitions => {
+
+            const container = document.getElementById("ranking-container");
+            container.innerHTML = "";
+
+            // Get unique competition IDs from ranking data
+            const rankingCompIds = [...new Set(
+                rankings.map(r => r.comp_id).filter(Boolean)
+            )];
+
+            // Match with competitions
+            const rankingCompetitions = competitions
+                .filter(c => rankingCompIds.includes(c.comp_id))
+                .sort((a, b) => {
+                    const getYear = d => d ? d.split(".").pop() : "";
+                    return Number(getYear(b.date)) - Number(getYear(a.date));
+                });
+
+            if (!rankingCompetitions.length) {
+                container.innerHTML = "<p>No ranking competitions found.</p>";
+                return;
+            }
+
+            // Create table (same style as competitions)
+            const table = document.createElement("table");
+            table.className = "results-table";
+            container.appendChild(table);
+
+            const thead = document.createElement("thead");
+            table.appendChild(thead);
+
+            const headRow = document.createElement("tr");
+            thead.appendChild(headRow);
+
+            ["Competition", "City", "Country"]
+                .forEach(col => {
+                    const th = document.createElement("th");
+                    th.textContent = col;
+                    headRow.appendChild(th);
+                });
+
+            const tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+
+            rankingCompetitions.forEach(comp => {
+                const tr = document.createElement("tr");
+
+                // Competition link → world_ranking.html
+                const tdComp = document.createElement("td");
+                const link = document.createElement("a");
+                link.href = `world_ranking.html?id=${comp.comp_id}`;
+                link.textContent = "World Ranking List " + comp.date;
+                tdComp.appendChild(link);
+                tr.appendChild(tdComp);
+
+                // City
+                const tdCity = document.createElement("td");
+                tdCity.textContent = comp.city || "";
+                tr.appendChild(tdCity);
+
+                // Country
+                const tdCountry = document.createElement("td");
+                if (comp.country) {
+                    const countryLink = document.createElement("a");
+                    countryLink.href = `national_federation.html?country=${comp.country}`;
+                    countryLink.innerHTML = renderFlag(comp.country);
+                    tdCountry.appendChild(countryLink);
+                }
+                tr.appendChild(tdCountry);
+
+                
+
+                tbody.appendChild(tr);
+            });
+
+        });
+    });
+}
+
+function renderFederationsTab() {
+    parseCSV("data/athletes.csv", athletes => {
+
+        const container = document.getElementById("federations-container");
+        container.innerHTML = "";
+
+        if (!athletes.length) {
+            container.innerHTML = "<p>No federations found.</p>";
+            return;
+        }
+
+        // Count athletes per country
+        const countries = {};
+
+        athletes.forEach(a => {
+            if (!a.country) return;
+            if (!countries[a.country]) countries[a.country] = 0;
+            countries[a.country]++;
+        });
+
+        // Sort by FULL country name
+        const sorted = Object.entries(countries)
+            .sort((a, b) => {
+                const nameA = countryMap[a[0]] || a[0];
+                const nameB = countryMap[b[0]] || b[0];
+                return nameA.localeCompare(nameB);
+            });
+
+        // Table
+        const table = document.createElement("table");
+        table.className = "results-table";
+        container.appendChild(table);
+
+        const thead = document.createElement("thead");
+        table.appendChild(thead);
+
+        const headRow = document.createElement("tr");
+        thead.appendChild(headRow);
+
+        ["Country","Code", "Athletes"].forEach(col => {
+            const th = document.createElement("th");
+            th.textContent = col;
+            headRow.appendChild(th);
+        });
+
+        const tbody = document.createElement("tbody");
+        table.appendChild(tbody);
+
+        sorted.forEach(([country, count]) => {
+            const tr = document.createElement("tr");
+
+            const tdCountry = document.createElement("td");
+            const link = document.createElement("a");
+
+            const fullName = countryMap[country] || country;
+
+           link.href = `national_federation.html?country=${country}`;
+			link.textContent = fullName;
+
+            tdCountry.appendChild(link);
+            tr.appendChild(tdCountry);
+			
+			const tdCode = document.createElement("td");
+			tdCode.innerHTML = renderFlag(country);
+			tr.appendChild(tdCode);
+
+            const tdCount = document.createElement("td");
+            tdCount.textContent = count;
+            tr.appendChild(tdCount);
+
+            tbody.appendChild(tr);
+
+			
+        });
+    });
+}
+
+function renderAthletesTab() {
+    loadCountries(() => {
+
+        parseCSV("data/athletes.csv", athletes => {
+
+            const container = document.getElementById("athletes-container");
+            container.innerHTML = "";
+
+            if (!athletes.length) {
+                container.innerHTML = "<p>No athletes found.</p>";
+                return;
+            }
+
+            // 🚨 FILTER OUT INVALID ATHLETES
+            const validAthletes = athletes.filter(a =>
+                a.athlete_name && a.athlete_name !== "-"
+            );
+
+            // Sort by name
+            validAthletes.sort((a, b) => {
+                const nameA = (a.athlete_name || "").toLowerCase();
+                const nameB = (b.athlete_name || "").toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
+
+            // Table
+            const table = document.createElement("table");
+            table.className = "results-table";
+            container.appendChild(table);
+
+            const thead = document.createElement("thead");
+            table.appendChild(thead);
+
+            const headRow = document.createElement("tr");
+            thead.appendChild(headRow);
+
+            ["Athlete", "Country", "Gender"].forEach(col => {
+                const th = document.createElement("th");
+                th.textContent = col;
+                headRow.appendChild(th);
+            });
+
+            const tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+
+            validAthletes.forEach(a => {
+                const tr = document.createElement("tr");
+
+                // Athlete name
+                const tdName = document.createElement("td");
+                const link = document.createElement("a");
+                link.href = `athlete.html?id=${a.athlete_id}`;
+                link.textContent = a.athlete_name;
+                tdName.appendChild(link);
+                tr.appendChild(tdName);
+
+                // Country (flag + code)
+                const tdCountry = document.createElement("td");
+
+                if (a.country) {
+                    const countryLink = document.createElement("a");
+
+                    countryLink.href = `national_federation.html?country=${a.country}`;
+                    countryLink.innerHTML = `${renderFlag(a.country)} `;
+
+                    tdCountry.appendChild(countryLink);
+                }
+
+                tr.appendChild(tdCountry);
+
+                // Gender
+                const tdGender = document.createElement("td");
+                tdGender.textContent = a.gender || "";
+                tr.appendChild(tdGender);
+
+                tbody.appendChild(tr);
+            });
+
+        });
+
+    });
+}
 
 /*
 function renderYearNav() {
@@ -553,7 +875,7 @@ function renderClassicResults(compId, athletes, resultsRaw, competition, isClubC
     // =========================
     const affiliationSet = new Set();
     compResults.forEach(r => {
-        const athlete = athletes.find(a => a.athlete_id === r.athlete_id);
+        const athlete = athletes.find(a => a.athlete_id === resolveAthleteId(r.athlete_id));
         const value = isClubCompetition ? athlete?.club : athlete?.country;
         if (value) affiliationSet.add(value);
     });
@@ -646,7 +968,7 @@ function renderClassicResults(compId, athletes, resultsRaw, competition, isClubC
         table.appendChild(tbody);
 
         catResults.forEach(r => {
-            const athlete = athletes.find(a => a.athlete_id === r.athlete_id);
+            const athlete = athletes.find(a => a.athlete_id === resolveAthleteId(r.athlete_id));
             const tr = document.createElement("tr");
             const affiliationValue = isClubCompetition ? athlete?.club : athlete?.country;
             if (affiliationValue) tr.dataset.affiliation = affiliationValue;
@@ -1095,7 +1417,7 @@ function loadAthletePage() {
     ]).then(([athletes, results, competitions, aliases]) => {
 
         // =========================
-        // Build Alias Maps
+        // ALIAS MAPS
         // =========================
         const aliasToMain = {};
         const mainToAliases = {};
@@ -1107,17 +1429,23 @@ function loadAthletePage() {
 
             aliasToMain[alias] = main;
 
-            if (!mainToAliases[main])
-                mainToAliases[main] = [];
-
+            if (!mainToAliases[main]) mainToAliases[main] = [];
             mainToAliases[main].push(alias);
         });
 
-        const mainId = aliasToMain[requestedId] || requestedId;
+        const resolveId = id => aliasToMain[id] || id;
+
+        // =========================
+        // MAIN + ALL IDS
+        // =========================
+        const mainId = resolveId(requestedId);
 
         const allIds = new Set([mainId]);
         (mainToAliases[mainId] || []).forEach(id => allIds.add(id));
 
+        // =========================
+        // ATHLETE (pick best match)
+        // =========================
         const athlete =
             athletes.find(a => a.athlete_id === mainId) ||
             athletes.find(a => allIds.has(a.athlete_id));
@@ -1125,7 +1453,7 @@ function loadAthletePage() {
         if (!athlete) return;
 
         // =========================
-        // Athlete Results
+        // RESULTS (ALL IDS)
         // =========================
         const athleteResults = results
             .filter(r => allIds.has(r.athlete_id))
@@ -1136,52 +1464,52 @@ function loadAthletePage() {
             .filter(r => r.competition);
 
         // =========================
-        // Represented Countries & Clubs
+        // COUNTRIES + CLUBS FROM ALL IDS
         // =========================
         const representedCountries = new Set();
         const representedClubs = new Set();
 
         athleteResults.forEach(r => {
 
-            const countryPrefix = r.athlete_id.substring(0, 3);
-            representedCountries.add(countryPrefix);
+            const athleteEntry = athletes.find(a => a.athlete_id === r.athlete_id);
 
-            const athleteEntry =
-                athletes.find(a => a.athlete_id === r.athlete_id);
+            if (athleteEntry?.country) {
+                representedCountries.add(athleteEntry.country);
+            }
 
-            if (athleteEntry?.club)
-                representedClubs.add(athleteEntry.club);
+            if (athleteEntry?.club) {
+                const club = athleteEntry.club.trim();
+                if (club && club !== "-") {
+                    representedClubs.add(club);
+                }
+            }
         });
 
         // =========================
-        // Profile Section
+        // PHOTO
         // =========================
         const photo = document.getElementById("athlete-photo");
         photo.src = `photos/athletes/${mainId}.png`;
-        photo.onerror = () => { photo.src = "photos/default.png"; };
+        photo.onerror = () => photo.src = "photos/default.png";
 
         // =========================
-        // NAME + FORMER NAMES
+        // NAME + ALIASES
         // =========================
         const nameElement = document.getElementById("athlete-name");
 
-        function getSurname(fullName) {
-            return fullName.split(" ")[0];
-        }
-
-        const mainSurname = getSurname(athlete.athlete_name);
+        const mainSurname = athlete.athlete_name.split(" ")[0];
 
         const formerSurnames = (mainToAliases[mainId] || [])
-            .map(id => athletes.find(a => a.athlete_id === id))
+            .map(id => athletes.find(a => a.athlete_id === resolveId(id)))
             .filter(Boolean)
-            .map(a => getSurname(a.athlete_name))
-            .filter(s => s !== mainSurname);
+            .map(a => a.athlete_name.split(" ")[0])
+            .filter(n => n !== mainSurname);
 
         nameElement.innerHTML = athlete.athlete_name;
 
         if (formerSurnames.length) {
             nameElement.innerHTML += `
-                <div style="font-size:0.9em; font-style:italic; color:#666;">
+                <div style="font-size:0.9em;font-style:italic;color:#666;">
                     (formerly: ${[...new Set(formerSurnames)].join(" / ")})
                 </div>
             `;
@@ -1192,125 +1520,99 @@ function loadAthletePage() {
         // =========================
         const countryElement = document.getElementById("athlete-country");
 
-        let countryList = Array.from(representedCountries);
+        const countryList = [
+            athlete.country,
+            ...Array.from(representedCountries).filter(c => c !== athlete.country)
+        ];
 
-        countryList = countryList.filter(c => c !== athlete.country);
-        countryList.unshift(athlete.country);
-
-        const mainCountry = countryList[0];
-        const otherCountries = countryList.slice(1);
-
-        let html = `
+        let countryHTML = `
             <strong>Country:</strong>
-            <a href="national_federation.html?country=${mainCountry}">
-                ${renderFlag(mainCountry)}
+            <a href="national_federation.html?country=${countryList[0]}">
+                ${renderFlag(countryList[0])}
             </a>
         `;
 
-        if (otherCountries.length) {
-            html += `
+        if (countryList.length > 1) {
+            countryHTML += `
                 <div style="font-size:0.9em;">
                     Also represented:
-                    ${otherCountries.map(c =>
+                    ${countryList.slice(1).map(c =>
                         `<a href="national_federation.html?country=${c}">
                             ${renderFlag(c)}
-                         </a>`
+                        </a>`
                     ).join(" ")}
                 </div>
             `;
         }
 
-        countryElement.innerHTML = html;
-
-// =========================
-// CLUBS
-// =========================
-const clubElement = document.getElementById("athlete-club");
-
-const clubList = Array.from(representedClubs).sort();
-
-if (clubList.length) {
-
-    const mainClub = clubList[0];
-    const formerClubs = clubList.slice(1);
-
-   // let html = `<strong>Club:</strong> ${mainClub}`;
-	
-	let html = `
-            <strong>Club:</strong>
-            <a href="club.html?club=${mainClub}">
-                ${renderClubFlag(mainClub)}
-            </a>
-        `;
-
-    if (formerClubs.length) {
-        html += `
-            <div style="font-size:0.9em; margin-top:4px;">
-                <strong>Former clubs:</strong><br>
-                ${formerClubs.map(c => `${c}`).join("<br>")}
-            </div>
-        `;
-    }
-
-    clubElement.innerHTML = html;
-}
-
+        countryElement.innerHTML = countryHTML;
 
         // =========================
-        // RESULTS
+        // CLUBS (FIXED & COMPLETE)
         // =========================
-        const container =
-            document.getElementById("athlete-results-container");
+        const clubElement = document.getElementById("athlete-club");
 
-        const yearContainer =
-            document.getElementById("filter-year");
-        const levelContainer =
-            document.getElementById("filter-level");
-        const categoryContainer =
-            document.getElementById("filter-category");
+        const clubList = Array.from(representedClubs);
 
-        const years =
-            [...new Set(athleteResults.map(r => r.competition.date.slice(-4)))]
-            .sort((a,b)=>b-a);
+        if (clubList.length) {
 
-        const levels =
-            [...new Set(athleteResults.map(r => r.competition.level))];
+            const mainClub = athlete.club;
+            const otherClubs = clubList.filter(c => c !== mainClub);
 
-        const categories =
-            [...new Set(athleteResults.map(r => r.category))];
+            let clubHTML = `
+                <strong>Club:</strong>
+                <a href="club.html?club=${encodeURIComponent(mainClub)}">
+                    ${renderClubFlag(mainClub)}
+                </a>
+            `;
+
+            if (otherClubs.length) {
+                clubHTML += `
+                    <div style="font-size:0.9em;margin-top:4px;">
+                        <strong>Also represented:</strong><br>
+                        ${otherClubs.map(c =>
+                            `<a href="club.html?club=${encodeURIComponent(c)}">${c}</a>`
+                        ).join("<br>")}
+                    </div>
+                `;
+            }
+
+            clubElement.innerHTML = clubHTML;
+        }
+
+        // =========================
+        // FILTERS
+        // =========================
+        const container = document.getElementById("athlete-results-container");
+
+        const years = [...new Set(athleteResults.map(r => r.competition.date.slice(-4)))].sort((a,b)=>b-a);
+        const levels = [...new Set(athleteResults.map(r => r.competition.level))];
+        const categories = [...new Set(athleteResults.map(r => r.category))];
 
         const selectedYears = new Set(years);
         const selectedLevels = new Set(levels);
         const selectedCategories = new Set(categories);
 
-        function createTag(container, value, selectedSet) {
-
+        function createTag(container, value, set) {
             const tag = document.createElement("div");
             tag.className = "filter-tag active";
             tag.textContent = value;
             container.appendChild(tag);
 
             tag.addEventListener("click", () => {
-                if (selectedSet.has(value)) {
-                    selectedSet.delete(value);
-                    tag.classList.remove("active");
-                } else {
-                    selectedSet.add(value);
-                    tag.classList.add("active");
-                }
+                set.has(value) ? set.delete(value) : set.add(value);
+                tag.classList.toggle("active");
                 render();
             });
         }
 
-        years.forEach(y =>
-            createTag(yearContainer, y, selectedYears));
+        years.forEach(y => createTag(document.getElementById("filter-year"), y, selectedYears));
+        levels.forEach(l => createTag(document.getElementById("filter-level"), l, selectedLevels));
+        categories.forEach(c => createTag(document.getElementById("filter-category"), c, selectedCategories));
 
-        levels.forEach(l =>
-            createTag(levelContainer, l, selectedLevels));
-
-        categories.forEach(c =>
-            createTag(categoryContainer, c, selectedCategories));
-
+        // =========================
+        // RENDER RESULTS
+        // =========================
         function render() {
 
             container.innerHTML = "";
@@ -1322,8 +1624,7 @@ if (clubList.length) {
             );
 
             if (!filtered.length) {
-                container.innerHTML =
-                    "<p>No results for the selected filters.</p>";
+                container.innerHTML = "<p>No results for the selected filters.</p>";
                 return;
             }
 
@@ -1335,109 +1636,88 @@ if (clubList.length) {
                 byYear[y].push(r);
             });
 
-            Object.keys(byYear)
-                .sort((a,b)=>b-a)
-                .forEach(year => {
+            Object.keys(byYear).sort((a,b)=>b-a).forEach(year => {
 
-                    const h3 = document.createElement("h3");
-                    h3.textContent = year;
-                    container.appendChild(h3);
+                const h3 = document.createElement("h3");
+                h3.textContent = year;
+                container.appendChild(h3);
 
-                    const rows = byYear[year];
+                const rows = byYear[year];
 
-                    const colSet =
-                        new Set(["competition","category","rank"]);
+                const colSet = new Set(["competition","category","rank"]);
 
-                    rows.forEach(r => {
-                        const fmtCols =
-                            FORMAT_COLUMNS[r.competition.format] || [];
-
-                        fmtCols.forEach(c => {
-                            if (!["athlete_id","country","comp_id","res_id"]
-                                .includes(c))
-                                colSet.add(c);
-                        });
+                rows.forEach(r => {
+                    (FORMAT_COLUMNS[r.competition.format] || []).forEach(c => {
+                        if (!["athlete_id","country","comp_id","res_id"].includes(c)) {
+                            colSet.add(c);
+                        }
                     });
+                });
 
-                    colSet.add("format");
+                colSet.add("format");
+                const columns = Array.from(colSet);
 
-                    const columns = Array.from(colSet);
+                const table = document.createElement("table");
+                table.className = "results-table";
+                container.appendChild(table);
 
-                    const table = document.createElement("table");
-                    table.className = "results-table";
-                    container.appendChild(table);
+                const thead = document.createElement("thead");
+                const trh = document.createElement("tr");
+                thead.appendChild(trh);
+                table.appendChild(thead);
 
-                    const thead = document.createElement("thead");
-                    table.appendChild(thead);
+                columns.forEach(c => {
+                    const th = document.createElement("th");
+                    const labels = FORMAT_LABELS[rows[0].competition.format] || {};
 
-                    const trh = document.createElement("tr");
-                    thead.appendChild(trh);
+                    th.textContent =
+                        c === "competition" ? "Competition" :
+                        c === "category" ? "Category" :
+                        c === "format" ? "Format" :
+                        labels[c] || c.toUpperCase();
+
+                    trh.appendChild(th);
+                });
+
+                const tbody = document.createElement("tbody");
+                table.appendChild(tbody);
+
+                rows.sort((a,b)=>Number(a.rank)-Number(b.rank)).forEach(r => {
+
+                    const tr = document.createElement("tr");
+
+                    tr.style.backgroundColor =
+                        r.rank === "1" ? "#ffe680" :
+                        r.rank === "2" ? "#e0e0e0" :
+                        r.rank === "3" ? "#e6c099" :
+                        "#b0e0ff";
 
                     columns.forEach(c => {
+                        const td = document.createElement("td");
 
-                        const th = document.createElement("th");
-                        const labels =
-                            FORMAT_LABELS[rows[0].competition.format] || {};
+                        if (c === "competition") {
+                            td.innerHTML = `<a href="competition.html?id=${r.comp_id}">
+                                ${r.competition.comp_name}
+                            </a>`;
+                        } else if (c === "category") {
+                            td.textContent = r.category;
+                        } else if (c === "format") {
+                            td.textContent = r.competition.format;
+                        } else {
+                            td.textContent = r[c] || "";
+                        }
 
-                        th.textContent =
-                            (c==="competition") ? "Competition" :
-                            (c==="category") ? "Category" :
-                            (c==="format") ? "Format" :
-                            labels[c] || c.replace(/_/g," ").toUpperCase();
-
-                        trh.appendChild(th);
+                        tr.appendChild(td);
                     });
 
-                    const tbody =
-                        document.createElement("tbody");
-                    table.appendChild(tbody);
-
-                    rows.sort((a,b)=>
-                        Number(a.rank)-Number(b.rank))
-                        .forEach(r => {
-
-                            const tr =
-                                document.createElement("tr");
-
-                            if(r.rank==="1")
-                                tr.style.backgroundColor="#ffe680";
-                            else if(r.rank==="2")
-                                tr.style.backgroundColor="#e0e0e0";
-                            else if(r.rank==="3")
-                                tr.style.backgroundColor="#e6c099";
-                            else
-                                tr.style.backgroundColor="#b0e0ff";
-
-                            columns.forEach(c => {
-
-                                const td =
-                                    document.createElement("td");
-
-                                if(c==="competition")
-                                    td.innerHTML =
-                                        `<a href="competition.html?id=${r.comp_id}">
-                                            ${r.competition.comp_name}
-                                         </a>`;
-                                else if(c==="category")
-                                    td.textContent = r.category;
-                                else if(c==="format")
-                                    td.textContent = r.competition.format;
-                                else
-                                    td.textContent = r[c]||"";
-
-                                tr.appendChild(td);
-                            });
-
-                            tbody.appendChild(tr);
-                        });
+                    tbody.appendChild(tr);
                 });
+            });
         }
 
         render();
-
     });
 }
-
 // =========================
 // National Federation Page
 // =========================
@@ -1461,8 +1741,7 @@ function loadFederationPage() {
                 // =========================
                 // Build Alias Maps
                 // =========================
-                const aliasToMain = {};
-                const mainToAliases = {};
+                
 
                 aliases.forEach(row => {
                     const main = row.main_id?.trim();
@@ -1474,28 +1753,26 @@ function loadFederationPage() {
                     mainToAliases[main].push(alias);
                 });
 
-                function getMainId(id) {
-                    return aliasToMain[id] || id;
-                }
+                
 
                 // =========================
                 // Collect athletes representing this country
                 // =========================
                 const athleteSet = new Set();
-                results.forEach(r => {
-                    const athleteId = r.athlete_id?.trim();
-                    if (!athleteId) return;
-                    const representedCountry = athleteId.substring(0,3);
-                    if (representedCountry === countryCode) {
-                        athleteSet.add(getMainId(athleteId));
-                    }
-                });
+
+results.forEach(r => {
+    const id = resolveAthleteId(r.athlete_id?.trim());
+    const country = id.substring(0,3);
+
+    if (country === countryCode) {
+        athleteSet.add(resolveAthleteId(id));
+    }
+});
 
                 // Athletes to display
                 const athletesToDisplay = athletes
-    .filter(a => athleteSet.has(getMainId(a.athlete_id)))
-    .filter(a => getMainId(a.athlete_id) === a.athlete_id)
-    .filter(a => a.athlete_name && a.athlete_name.trim() !== "-")
+    .filter(a => athleteSet.has(a.athlete_id))
+    .filter(a => a.athlete_name && a.athlete_name !== "-")
     .sort((a,b) => a.athlete_name.localeCompare(b.athlete_name));
 
                 // =========================
@@ -1574,7 +1851,7 @@ function loadFederationPage() {
                         // Collect alias last names
                         const aliasIds = mainToAliases[a.athlete_id] || [];
                         let aliasLastNames = aliasIds
-                            .map(id => athletes.find(x => x.athlete_id === id))
+                            .map(id => athletes.find(x => x.athlete_id === resolveAthleteId(id)))
                             .filter(Boolean)
                             .map(x => x.athlete_name)
                             .filter(name => name !== a.athlete_name)
@@ -1681,31 +1958,15 @@ function loadClubPage() {
         parseCSV("data/results.csv", results => {
             parseCSV("data/athlete_aliases.csv", aliases => {
 
-                const aliasToMain = {};
-                const mainToAliases = {};
+                
 
-                aliases.forEach(row => {
-                    const main = row.main_id?.trim();
-                    const alias = row.alias_id?.trim();
-                    if (!main || !alias) return;
-
-                    aliasToMain[alias] = main;
-
-                    if (!mainToAliases[main])
-                        mainToAliases[main] = [];
-
-                    mainToAliases[main].push(alias);
-                });
-
-                function getMainId(id) {
-                    return aliasToMain[id] || id;
-                }
+               
 
                 // Filter athletes by club name
                 const athletesToDisplay = athletes
-                    .filter(a => a.club === clubName)
-                    .filter(a => getMainId(a.athlete_id) === a.athlete_id)
-                    .sort((a,b) => a.athlete_name.localeCompare(b.athlete_name));
+    .filter(a => a.club === clubName)
+    .filter(a => a.athlete_name && a.athlete_name !== "-")
+    .sort((a,b) => a.athlete_name.localeCompare(b.athlete_name));
 
                 document.getElementById("club-title").textContent =
                     `${clubName}`;
@@ -1762,7 +2023,7 @@ function loadClubPage() {
                     // Collect alias last names
                     const aliasIds = mainToAliases[a.athlete_id] || [];
                     let aliasLastNames = aliasIds
-                        .map(id => athletes.find(x => x.athlete_id === id))
+                        .map(id => athletes.find(x => x.athlete_id === resolveAthleteId(id)))
                         .filter(Boolean)
                         .map(x => x.athlete_name)
                         .filter(name => name !== a.athlete_name)
@@ -1796,6 +2057,137 @@ function loadClubPage() {
     });
 }
 
+function loadWorldRankingPage() {
+    const params = new URLSearchParams(window.location.search);
+    const compId = params.get("id");
+
+    if (!compId) return;
+
+    parseCSV("data/world_ranking.csv", rankings => {
+        parseCSV("data/athletes.csv", athletes => {
+            parseCSV("data/competitions.csv", competitions => {
+
+                const container = document.getElementById("ranking-table-container");
+                const title = document.getElementById("ranking-title");
+                const info = document.getElementById("ranking-info");
+
+                const tabs = document.querySelectorAll(".tab-button");
+
+                // Build athlete map
+                const athleteMap = {};
+                athletes.forEach(a => {
+                    athleteMap[a.athlete_id] = a;
+                });
+
+                // Filter ranking by competition
+                const fullRanking = rankings
+                    .filter(r => r.comp_id === compId);
+
+                if (!fullRanking.length) {
+                    container.innerHTML = "<p>No ranking data found.</p>";
+                    return;
+                }
+
+                const comp = competitions.find(c => c.comp_id === compId);
+                title.textContent = "IAU World Ranking List";
+                info.textContent = comp ? comp.date : "";
+
+                // ===== RENDER FUNCTION =====
+                function renderTable(category) {
+                    container.innerHTML = "";
+
+                    let filtered = [...fullRanking];
+
+                   
+                    filtered = filtered.filter(r => r.cat === category);
+                    
+
+                    filtered.sort((a, b) => Number(a.rank) - Number(b.rank));
+
+                    if (!filtered.length) {
+                        container.innerHTML = "<p>No data for this category.</p>";
+                        return;
+                    }
+
+                    const table = document.createElement("table");
+                    table.className = "results-table";
+                    container.appendChild(table);
+
+                    const thead = document.createElement("thead");
+                    table.appendChild(thead);
+
+                    const headRow = document.createElement("tr");
+                    thead.appendChild(headRow);
+
+                    ["Rank", "Athlete", "Country", "Points"].forEach(col => {
+                        const th = document.createElement("th");
+                        th.textContent = col;
+                        headRow.appendChild(th);
+                    });
+
+                    const tbody = document.createElement("tbody");
+                    table.appendChild(tbody);
+
+                    filtered.forEach(r => {
+                        const tr = document.createElement("tr");
+                        const athlete = athleteMap[r.athlete_id];
+
+                        // Rank
+                        const tdRank = document.createElement("td");
+                        tdRank.textContent = r.rank;
+                        tr.appendChild(tdRank);
+
+                        // Athlete
+                        const tdName = document.createElement("td");
+                        if (athlete) {
+                            const link = document.createElement("a");
+                            link.href = `athlete.html?id=${athlete.athlete_id}`;
+                            link.textContent = athlete.athlete_name;
+                            tdName.appendChild(link);
+                        } else {
+                            tdName.textContent = r.athlete_id;
+                        }
+                        tr.appendChild(tdName);
+
+                        // Country
+                        const tdCountry = document.createElement("td");
+                        if (athlete && athlete.country) {
+                            const link = document.createElement("a");
+                            link.href = `national_federation.html?country=${athlete.country}`;
+                            link.innerHTML = renderFlag(athlete.country);
+                            tdCountry.appendChild(link);
+                        }
+                        tr.appendChild(tdCountry);
+
+                        // Points
+                        const tdPoints = document.createElement("td");
+                        tdPoints.textContent = r.points;
+                        tr.appendChild(tdPoints);
+
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                // ===== TAB HANDLING =====
+                tabs.forEach(tab => {
+                    tab.addEventListener("click", () => {
+
+                        tabs.forEach(t => t.classList.remove("active"));
+                        tab.classList.add("active");
+
+                        const category = tab.dataset.cat;
+                        renderTable(category);
+                    });
+                });
+
+                // Initial render
+                renderTable("M");
+
+            });
+        });
+    });
+}
+
 // =========================
 // Global Random Buttons
 // =========================
@@ -1812,14 +2204,11 @@ function initRandomButtons() {
                 results.map(r => r.athlete_id)
             );
 
-            const validAthletes = athletes.filter(a => {
-                const name = a.athlete_name?.replace(/\r/g, "").trim();
-                return (
-                    name &&
-                    name !== "-" &&
-                    athletesWithResults.has(a.athlete_id)
-                );
-            });
+            const validAthletes = athletes.filter(a =>
+    a.athlete_name &&
+    a.athlete_name !== "-" &&
+    resolveAthleteId(a.athlete_id) === a.athlete_id
+);
 
             randomAthleteBtn.addEventListener("click", () => {
                 if (!validAthletes.length) return;
@@ -1868,6 +2257,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     loadAthletePage();
 	loadFederationPage(); 
 	initRandomButtons();
+	loadWorldRankingPage();
 	/* -----------------------
        PDF DOWNLOAD BUTTON
     ----------------------- */
@@ -1982,3 +2372,11 @@ function generateSimplePDF() {
     doc.save(`${compName}-results.pdf`);
 }
 
+if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
+    loadCountries();
+	loadCompetitionList();   // existing
+    renderRankingTab();      // new
+    renderFederationsTab();  // new
+    renderAthletesTab();     // new
+    setupIndexTabs();        // tabs
+}
