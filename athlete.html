@@ -20,6 +20,7 @@
             <div id="athlete-country"></div>
             <div id="athlete-club"></div>
             <div id="athlete-gender"></div>
+			<div id="ranking-section"></div>
         </div>
     </div>
 </header>
@@ -69,7 +70,24 @@
 <!-- ========================= -->
 <main>
     <h2>Results</h2>
-    <div id="athlete-results-container"></div>
+
+    <div class="tabs">
+        <button id="tab-classic" class="tab-button active">
+            Classic
+        </button>
+
+        <button id="tab-matchplay" class="tab-button" style="display:none;">
+            Match Play
+        </button>
+    </div>
+
+    <div id="classic-tab">
+        <div id="athlete-results-container"></div>
+    </div>
+
+    <div id="matchplay-tab" style="display:none;">
+        <div id="athlete-matchplay-container"></div>
+    </div>
 </main>
 
 <!-- ========================= -->

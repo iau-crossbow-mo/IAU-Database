@@ -1413,8 +1413,10 @@ function loadAthletePage() {
         new Promise(r => parseCSV("data/athletes.csv", r)),
         new Promise(r => parseCSV("data/results.csv", r)),
         new Promise(r => parseCSV("data/competitions.csv", r)),
-        new Promise(r => parseCSV("data/athlete_aliases.csv", r))
-    ]).then(([athletes, results, competitions, aliases]) => {
+        new Promise(r => parseCSV("data/athlete_aliases.csv", r)),
+		new Promise(r => parseCSV("data/world_ranking.csv", r)),
+    new Promise(r => parseCSV("data/match_play_results.csv", r))
+    ]).then(([athletes, results, competitions, aliases, rankings, matchResults]) => {
 
         // =========================
         // ALIAS MAPS
@@ -1463,7 +1465,260 @@ function loadAthletePage() {
             }))
             .filter(r => r.competition);
 
-        // =========================
+		// =========================
+		// MATCH PLAY RESULTS
+		// =========================
+		const athleteMatchResults = matchResults.filter(r =>
+			allIds.has(r.athlete1_id) || allIds.has(r.athlete2_id)
+		);	
+		
+function renderAthleteMatches() {
+
+    const container = document.getElementById("athlete-matchplay-container");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    if (!athleteMatchResults.length) {
+        container.innerHTML = "<p>No match play results.</p>";
+        return;
+    }
+
+    // =========================
+    // GROUP BY COMPETITION
+    // =========================
+    const grouped = {};
+
+    athleteMatchResults.forEach(r => {
+        if (!grouped[r.comp_id]) grouped[r.comp_id] = [];
+        grouped[r.comp_id].push(r);
+    });
+
+    // =========================
+    // SORT COMPETITIONS (NEWEST FIRST)
+    // =========================
+    const sortedCompIds = Object.keys(grouped).sort((a, b) => {
+        const compA = competitions.find(c => c.comp_id === a);
+        const compB = competitions.find(c => c.comp_id === b);
+        return parseDateSafe(compB?.date) - parseDateSafe(compA?.date);
+    });
+
+    // =========================
+    // GROUP BY YEAR
+    // =========================
+    const byYear = {};
+
+// build year groups (same idea as Classic)
+sortedCompIds.forEach(compId => {
+    const comp = competitions.find(c => c.comp_id === compId);
+    const year = comp?.date?.slice(-4) || "Unknown";
+
+    if (!byYear[year]) byYear[year] = [];
+    byYear[year].push(compId);
+});
+
+// render years (IDENTICAL STYLE TO CLASSIC)
+Object.keys(byYear)
+    .sort((a, b) => b - a)
+    .forEach(year => {
+
+        // YEAR HEADER (same as Classic)
+        const h3 = document.createElement("h3");
+        h3.textContent = year;
+        container.appendChild(h3);
+
+        const compIds = byYear[year];
+
+    // =========================
+    // ROUND ORDER
+    // =========================
+    const roundOrder = {
+        "Gold Final": 8,
+        "Bronze Final": 7,
+        "Semifinals": 6,
+        "Quarterfinals": 5,
+        "Round of 16": 4,
+        "Round of 32": 3,
+        "Round of 64": 2,
+        "Round of 128": 1
+    };
+
+    function getRoundValue(r) {
+        return roundOrder[r.comp_round] || 99;
+    }
+
+    function isWin(match) {
+        return match.winner_id && allIds.has(match.winner_id);
+    }
+
+    // =========================
+    // TABLE
+    // =========================
+    const table = document.createElement("table");
+    table.className = "results-table";
+    container.appendChild(table);
+
+    const thead = document.createElement("thead");
+    const trh = document.createElement("tr");
+    thead.appendChild(trh);
+    table.appendChild(thead);
+
+    ["Rank", "Competition", "Round", "Opponent", "Score", "Result"].forEach(h => {
+        const th = document.createElement("th");
+        th.textContent = h;
+        trh.appendChild(th);
+    });
+
+    const tbody = document.createElement("tbody");
+    table.appendChild(tbody);
+
+    // =========================
+    // LOOP YEARS
+    // =========================
+   
+
+            
+            // =========================
+            // LOOP COMPETITIONS
+            // =========================
+            compIds.forEach(compId => {
+
+                const matches = grouped[compId];
+
+                matches.sort((a, b) => getRoundValue(a) - getRoundValue(b));
+
+                const finalMatch = matches.find(m => m.comp_round === "Gold Final");
+                const bronzeMatch = matches.find(m => m.comp_round === "Bronze Final");
+
+                let finalRank = "";
+
+                if (finalMatch) {
+                    finalRank = isWin(finalMatch) ? "1" : "2";
+                } else if (bronzeMatch) {
+                    finalRank = isWin(bronzeMatch) ? "3" : "4";
+                } else {
+                    const lossMatch = matches.find(m => !isWin(m));
+
+                    if (lossMatch) {
+                        switch (lossMatch.comp_round) {
+                            case "Quarterfinals":
+                                finalRank = "QF";
+                                break;
+                            case "Round of 16":
+                                finalRank = "R16";
+                                break;
+                            case "Round of 32":
+                                finalRank = "R32";
+                                break;
+                            case "Round of 64":
+                                finalRank = "R64";
+                                break;
+                            case "Round of 128":
+                                finalRank = "R128";
+                                break;
+                            default:
+                                finalRank = lossMatch.comp_round;
+                        }
+                    } else {
+                        finalRank = "?";
+                    }
+                }
+
+                const comp = competitions.find(c => c.comp_id === compId);
+                const compHTML = `
+                    <a href="competition.html?id=${compId}">
+                        ${comp?.country ? renderFlag(comp.country) : ""}
+                        ${comp?.comp_name || compId}
+                    </a>
+                `;
+
+                // =========================
+                // ROWS
+                // =========================
+                matches.forEach((r, index) => {
+
+                    const isA1 = allIds.has(r.athlete1_id);
+
+                    const opponentId = isA1 ? r.athlete2_id : r.athlete1_id;
+                    const opponentName = isA1 ? r.athlete_name2 : r.athlete_name1;
+
+                    const opponentData = athletes.find(a => a.athlete_id === opponentId);
+                    const opponentCountry = opponentData?.country;
+
+                    const opponentHTML = `
+                        <a href="athlete.html?id=${opponentId}">
+                            ${opponentCountry ? renderFlag(opponentCountry) : ""}
+                            ${opponentName}
+                        </a>
+                    `;
+
+                    const score = isA1
+                        ? `${r.points1} - ${r.points2}`
+                        : `${r.points2} - ${r.points1}`;
+
+                    const result = isWin(r) ? "Win" : "Loss";
+
+                    const tr = document.createElement("tr");
+
+                    // ✅ place coloring (only once per competition visually)
+                    if (finalRank === "1") tr.classList.add("place-1");
+                    else if (finalRank === "2") tr.classList.add("place-2");
+                    else if (finalRank === "3") tr.classList.add("place-3");
+
+                    // FIRST ROW ONLY (rank + competition)
+                    if (index === 0) {
+
+                        const tdRank = document.createElement("td");
+                        tdRank.textContent = finalRank;
+                        tdRank.rowSpan = matches.length;
+                        tdRank.style.fontWeight = "bold";
+                        tr.appendChild(tdRank);
+
+                        const tdComp = document.createElement("td");
+                        tdComp.rowSpan = matches.length;
+                        tdComp.innerHTML = compHTML;
+                        tr.appendChild(tdComp);
+                    }
+
+                    const tdRound = document.createElement("td");
+                    tdRound.textContent = r.comp_round;
+
+                    const tdOpp = document.createElement("td");
+                    tdOpp.innerHTML = opponentHTML;
+
+                    const tdScore = document.createElement("td");
+                    tdScore.textContent = score;
+
+                    const tdResult = document.createElement("td");
+                    tdResult.textContent = result;
+                    tdResult.style.color = result === "Win" ? "green" : "red";
+
+                    tr.appendChild(tdRound);
+                    tr.appendChild(tdOpp);
+                    tr.appendChild(tdScore);
+                    tr.appendChild(tdResult);
+
+                    tbody.appendChild(tr);
+                });
+
+                // =========================
+                // VISUAL SEPARATOR
+                // =========================
+                const sepRow = document.createElement("tr");
+                const sepCell = document.createElement("td");
+
+                sepCell.colSpan = 6;
+                sepCell.style.height = "1px";
+                sepCell.style.background = "#ffffff";
+
+                sepRow.appendChild(sepCell);
+                tbody.appendChild(sepRow);
+            });
+		});
+	  
+}    
+		
+		// =========================
         // COUNTRIES + CLUBS FROM ALL IDS
         // =========================
         const representedCountries = new Set();
@@ -1580,6 +1835,148 @@ function loadAthletePage() {
             clubElement.innerHTML = clubHTML;
         }
 
+// =========================
+// WORLD RANKING
+// =========================
+
+function parseDateSafe(dateStr) {
+    if (!dateStr) return null;
+
+    // YYYY-MM-DD or YYYY-MM
+    if (dateStr.includes("-")) {
+        return new Date(dateStr);
+    }
+
+    // DD.MM.YYYY
+    if (dateStr.includes(".")) {
+        const parts = dateStr.split(".");
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
+
+    // fallback
+    return new Date(dateStr);
+}
+
+function getOrdinal(n) {
+    n = Number(n);
+    if (n % 10 === 1 && n % 100 !== 11) return n + "st";
+    if (n % 10 === 2 && n % 100 !== 12) return n + "nd";
+    if (n % 10 === 3 && n % 100 !== 13) return n + "rd";
+    return n + "th";
+}
+
+function formatMonthYear(dateStr) {
+    const d = parseDateSafe(dateStr);
+    if (!d || isNaN(d)) return "Unknown date";
+
+    return d.toLocaleString("en-US", {
+        month: "long",
+        year: "numeric"
+    });
+}
+
+function getRankingInfo() {
+
+    // attach competition data
+    const athleteRankings = rankings
+        .filter(r => allIds.has(r.athlete_id))
+        .map(r => ({
+            ...r,
+            competition: competitions.find(c => c.comp_id === r.comp_id)
+        }))
+        .filter(r => r.competition);
+
+    if (!athleteRankings.length) return null;
+
+    // =========================
+    // BEST EVER
+    // =========================
+    const best = athleteRankings.reduce((min, r) =>
+        Number(r.rank) < Number(min.rank) ? r : min
+    );
+
+    const bestText = `${getOrdinal(best.rank)} (${formatMonthYear(best.competition.date)})`;
+
+    // =========================
+    // END OF YEAR
+    // =========================
+   const endOfYear = athleteRankings.filter(r =>
+    r.comp_id.startsWith("WCF")
+);
+
+let bestEOYText = null;
+
+if (endOfYear.length) {
+    const bestEOY = endOfYear.reduce((min, r) =>
+        Number(r.rank) < Number(min.rank) ? r : min
+    );
+
+    // extract year from comp_id (e.g. WCF2024CRO → 2024)
+    const year = bestEOY.comp_id.slice(3, 7);
+
+    bestEOYText = `${getOrdinal(bestEOY.rank)} (${year} Season)`;
+}
+
+    // =========================
+// CURRENT (latest ranking overall)
+// =========================
+
+// get latest competition date globally
+const latestDate = rankings
+    .map(r => {
+        const comp = competitions.find(c => c.comp_id === r.comp_id);
+        return comp ? comp.date : null;
+    })
+    .filter(Boolean)
+    .reduce((max, d) =>
+        parseDateSafe(d) > parseDateSafe(max) ? d : max
+    );
+
+// now check THIS athlete in that ranking list
+const currentList = rankings
+    .filter(r =>
+        allIds.has(r.athlete_id) &&
+        competitions.find(c => c.comp_id === r.comp_id)?.date === latestDate
+    )
+    .sort((a,b) => Number(a.rank) - Number(b.rank));
+
+const currentText = currentList.length
+    ? getOrdinal(currentList[0].rank)
+    : "Unranked";
+	
+return {
+    best: bestText,
+    bestEOY: bestEOYText,
+    current: currentText
+};
+
+}
+
+// =========================
+// RANKING DISPLAY
+// =========================
+
+const rankingInfo = getRankingInfo();
+
+if (rankingInfo) {
+
+    const container = document.getElementById("ranking-section");
+
+    if (container) {
+        container.innerHTML = `
+            <h3>World Ranking</h3>
+            <p><strong>Best IAU World Ranking:</strong> ${rankingInfo.best}</p>
+            ${rankingInfo.bestEOY ? `
+                <p><strong>Best End of Year Ranking:</strong> ${rankingInfo.bestEOY}</p>
+            ` : ""}
+            <p><strong>Current IAU World Ranking:</strong> ${rankingInfo.current}</p>
+        `;
+    }
+}
+		
+		
+		
+		
         // =========================
         // FILTERS
         // =========================
@@ -1610,6 +2007,39 @@ function loadAthletePage() {
         levels.forEach(l => createTag(document.getElementById("filter-level"), l, selectedLevels));
         categories.forEach(c => createTag(document.getElementById("filter-category"), c, selectedCategories));
 
+// =========================
+// TABS SETUP
+// =========================
+const classicBtn = document.getElementById("tab-classic");
+const matchBtn = document.getElementById("tab-matchplay");
+const classicTab = document.getElementById("classic-tab");
+const matchTab = document.getElementById("matchplay-tab");
+
+// Show match tab only if data exists
+if (athleteMatchResults.length > 0) {
+    matchBtn.style.display = "inline-block";
+}
+
+// Tab switching
+classicBtn.addEventListener("click", () => {
+    classicTab.style.display = "block";
+    matchTab.style.display = "none";
+    classicBtn.classList.add("active");
+    matchBtn.classList.remove("active");
+});
+
+matchBtn.addEventListener("click", () => {
+    classicTab.style.display = "none";
+    matchTab.style.display = "block";
+    matchBtn.classList.add("active");
+    classicBtn.classList.remove("active");
+});		
+		
+		
+		
+		
+		
+		
         // =========================
         // RENDER RESULTS
         // =========================
@@ -1713,11 +2143,17 @@ function loadAthletePage() {
                     tbody.appendChild(tr);
                 });
             });
+			
+			
         }
 
         render();
+		renderAthleteMatches();
     });
 }
+
+
+
 // =========================
 // National Federation Page
 // =========================
