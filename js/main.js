@@ -1965,11 +1965,11 @@ if (rankingInfo) {
     if (container) {
         container.innerHTML = `
             <h3>World Ranking</h3>
-            <p><strong>Best IAU World Ranking:</strong> ${rankingInfo.best}</p>
+            <p><strong>Best IAU World Ranking:</strong> ${rankingInfo.best}<br>
             ${rankingInfo.bestEOY ? `
-                <p><strong>Best End of Year Ranking:</strong> ${rankingInfo.bestEOY}</p>
+                <strong>Best End of Year Ranking:</strong> ${rankingInfo.bestEOY}<br>
             ` : ""}
-            <p><strong>Current IAU World Ranking:</strong> ${rankingInfo.current}</p>
+            <strong>Current IAU World Ranking:</strong> ${rankingInfo.current}</p>
         `;
     }
 }
