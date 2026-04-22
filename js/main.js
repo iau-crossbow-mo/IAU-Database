@@ -53,13 +53,26 @@ function renderFlag(countryCode) {
                  style="width:24px; height:16px; vertical-align:middle; margin-right:6px;"> 
             ${countryCode}`;
 }
-
+/*
 function renderClubFlag(clubName) {
     if (!clubName) return "";
     return `<img src="photos/clubs/${clubName}.png" 
                  alt="${clubName}" 
                  style="width:24px; height:16px; vertical-align:middle; margin-right:6px;"> 
             ${clubName}`;
+}*/
+
+function renderClubFlag(clubName) {
+    if (!clubName) return "";
+
+    return `
+        <span style="display:inline-flex; align-items:center; gap:6px; line-height:1;">
+            <img src="photos/clubs/${clubName}.png" 
+                 alt="${clubName}" 
+                 style="width:24px; height:16px; object-fit:cover; display:block;">
+            <span>${clubName}</span>
+        </span>
+    `;
 }
 const CATEGORY_NAMES = {
     A: "Absolute",
@@ -131,7 +144,7 @@ const FORMAT_LABELS = {
     IR1800old: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"65m", d1_d2:"50m", d1_d3:"35m", d1_total:"IR900", d2_d1:"65m", d2_d2:"50m", d2_d3:"35m", d2_total:"IR900", total:"IR1800", rings:"R10", tens:"10" },
     IR1800Fold: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"65m", d1_d2:"50m", d1_d3:"35m", d1_total:"IR900", d2_d1:"65m", d2_d2:"50m", d2_d3:"35m", d2_total:"IR900", total:"IR1800", rings:"R10", tens:"10", final:"F", final_total:"Total" },
 	Eliminations: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"Q Round", d1_d2:"R32", d1_d3:"R16", d1_total:"Q Rank" },
-	Master: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"50m", d1_d2:"50m", d1_total:"IR600", d2_d1:"QF", d2_d2:"SF", d2_d3:"Final" },
+	Master: { rank:"Rank", athlete_id:"Athlete", country:"Country", category:"Cat.", d1_d1:"50m", d1_d2:"50m", d1_total:"IR600", d2_d1:"QF", d2_d2:"SF", d2_d3:"Final" }
 };
 
 const FORMAT_DISPLAY_NAMES = {
@@ -148,7 +161,9 @@ const FORMAT_DISPLAY_NAMES = {
     IR1800: "Double Classic",
     IR1800F: "Double Classic + Final",
     IR1800old: "Double Classic (Old)",
-    IR1800Fold: "Double Classic (Old) + Final"
+    IR1800Fold: "Double Classic (Old) + Final",
+	Eliminations: "Eliminations",
+	Master: "Master"
 };
 
 let aliasToMain = {};
@@ -244,6 +259,8 @@ function loadCompetitionList() {
                         tag.classList.add("active");
                     }
                     render();
+					//renderYearNav();
+					triggerYearChange();
                 });
 
                 el.appendChild(tag);
@@ -255,7 +272,7 @@ function loadCompetitionList() {
         populateFilter("filter-country", countries, "country");
         populateFilter("filter-format", formats, "format");
 
-	/*	
+		
 		//Navbar novi kod
 		
 		const yearGroups = [
@@ -315,7 +332,47 @@ function triggerYearChange() {
 
     render();
     renderYearNav();
-}*/
+}
+
+
+function renderYearNav() {
+	const labelEl = document.getElementById("year-item");
+    const group = yearGroups[activeYearIndex];
+	
+	
+  /*  const container = document.getElementById("year-scroll");
+    container.innerHTML = "";
+
+    yearGroups.forEach((group, index) => {
+        const el = document.createElement("div");
+        el.className = "year-item" + (index === activeYearIndex ? " active" : "");
+        el.textContent = group.label;
+
+        el.onclick = () => {
+            activeYearIndex = index;
+
+            // update YEAR FILTER automatically
+            filters.year.clear();
+
+            if (group.years !== "ALL") {
+                group.years.forEach(y => filters.year.add(y));
+            }
+
+            render();
+            renderYearNav();
+        };
+
+        container.appendChild(el);
+    });
+	*/
+	
+
+    labelEl.textContent = group.label;
+
+    // auto-center active
+    document.querySelector(".year-item.active")
+        ?.scrollIntoView({ behavior: "smooth", inline: "center" });
+}
 	
 		
 		
@@ -400,9 +457,10 @@ function triggerYearChange() {
                 tr.appendChild(tdLevel);
 
                 // Format cell
-                const tdFormat = document.createElement("td");
+               // const tdFormat = document.createElement("td");
 
 //let formatText = comp.format || "";
+/*
 let formatText = getFormatName(comp.format);
 
 if (matchplayCompetitions.has(comp.comp_id)) {
@@ -410,6 +468,29 @@ if (matchplayCompetitions.has(comp.comp_id)) {
 }
 
 tdFormat.textContent = formatText;
+
+
+tr.appendChild(tdFormat);*/
+
+const tdFormat = document.createElement("td");
+
+let rawFormat = comp.format || "";
+let formatText = getFormatName(rawFormat);
+
+// 🔴 If upcoming → render tag
+if (rawFormat.toLowerCase() === "upcoming") {
+    const tag = document.createElement("span");
+    tag.className = "format-tag upcoming";
+    tag.textContent = "Upcoming";
+    tdFormat.appendChild(tag);
+} else {
+    // normal text
+    if (matchplayCompetitions.has(comp.comp_id)) {
+        formatText += " + Match Play";
+    }
+    tdFormat.textContent = formatText;
+}
+
 tr.appendChild(tdFormat);
 
                 // Date cell
@@ -421,7 +502,7 @@ tr.appendChild(tdFormat);
             });
         }
 
-        render();
+        triggerYearChange();
     });
 	});
 	
@@ -699,42 +780,13 @@ function renderAthletesTab() {
     });
 }
 
-/*
-function renderYearNav() {
-    const container = document.getElementById("year-scroll");
-    container.innerHTML = "";
 
-    yearGroups.forEach((group, index) => {
-        const el = document.createElement("div");
-        el.className = "year-item" + (index === activeYearIndex ? " active" : "");
-        el.textContent = group.label;
-
-        el.onclick = () => {
-            activeYearIndex = index;
-
-            // update YEAR FILTER automatically
-            filters.year.clear();
-
-            if (group.years !== "ALL") {
-                group.years.forEach(y => filters.year.add(y));
-            }
-
-            render();
-            renderYearNav();
-        };
-
-        container.appendChild(el);
-    });
-
-    // auto-center active
-    document.querySelector(".year-item.active")
-        ?.scrollIntoView({ behavior: "smooth", inline: "center" });
-}
-*/
 
 // =========================
 // Render Affiliation (Country or Club)
 // =========================
+
+/*
 function renderAffiliation(athlete, competition) {
 
     // If National Championship or Local Tournament → show club
@@ -753,7 +805,29 @@ function renderAffiliation(athlete, competition) {
     // Otherwise → show national flag
     return athlete ? renderFlag(athlete.country) : "";
 }
+*/
 
+function renderAffiliation(athlete, competition) {
+    if (!athlete) return "";
+
+    const isClubCompetition = CLUB_BASED_LEVELS.includes(competition.level);
+
+    // 🔵 CLUB competitions → link to club page
+    if (isClubCompetition) {
+        if (!athlete.club) return "";
+
+        return `<a href="club.html?club=${encodeURIComponent(athlete.club)}">
+                    ${renderClubFlag(athlete.club)}
+                </a>`;
+    }
+
+    // 🟢 COUNTRY competitions → link to federation page
+    if (!athlete.country) return "";
+
+    return `<a href="national_federation.html?country=${encodeURIComponent(athlete.country)}">
+                ${renderFlag(athlete.country)}
+            </a>`;
+}
 
 function getFormatName(code){
     return FORMAT_DISPLAY_NAMES[code] || code;
@@ -869,6 +943,9 @@ function renderClassicResults(compId, athletes, resultsRaw, competition, isClubC
         container.innerHTML = "<p>No results available.</p>";
         return;
     }
+
+
+
 
     // =========================
     // Highlight Bar

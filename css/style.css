@@ -57,7 +57,8 @@ a{
 }
 
 .tab-button:hover {
-    background-color: #d0d0d0;
+    background-color: #000099;
+	color:white;
 }
 
 .tab-button.active {
@@ -185,7 +186,8 @@ header {
 }
 
 .filter-actions a:hover {
-    color: #004c88;
+    color: #000099;
+	
 }
 
 .filter-button {
@@ -326,6 +328,7 @@ header {
 
 .filter-tag:hover {
     background: #d0d0d0;
+	color:white;
 }
 
 .filter-tag.active {
@@ -398,9 +401,17 @@ header {
     background-color: #ff3b3b;
 }
 
+.results-table {
+    border-collapse: collapse;
+    table-layout: auto;
+    width: 100%;
+}
+
+
 /* Default row colors (your current ones) */
 .results-table tr {
     transition: background-color 0.3s;
+	height: 34px;
 }
 
 
@@ -410,6 +421,13 @@ header {
     transition: background-color 0.25s ease;
 }
 
+.results-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	font-size: 18px;
+	line-height: 1.2;
+}
 
 /* =========================================
    PROFESSIONAL MATCHPLAY BRACKET
@@ -455,7 +473,7 @@ header {
 
 .match-card:hover{
     transform:scale(1.02);
-    background:#f7fbff;
+    background:#000099;
 }
 
 /* ATHLETE ROW */
@@ -529,7 +547,7 @@ header {
 }
 
 .match-toggle:hover{
-    background:#0077cc;
+    background:#000099;
     color:white;
 }
 
@@ -759,7 +777,7 @@ header {
 }
 
 .details-btn:hover{
-    background:#0077cc;
+    background:#000099;
     color:white;
 }
 .match-details{
@@ -866,13 +884,15 @@ header {
 }
 
 .pdf-button:hover {
-    background-color: #0000ff;
+    background-color: #000099;
+	color:white;
 }
 
-/*
+
 .year-nav-wrapper {
     display: flex;
     align-items: center;
+	justify-content: center;
     gap: 10px;
     margin-bottom: 15px;
 }
@@ -884,13 +904,18 @@ header {
     scroll-behavior: smooth;
 }
 
+
+
 .year-item {
-    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;          /* match button height */
+    padding: 0 14px;       /* remove vertical padding */
     border-radius: 20px;
     background: #e0e0e0;
-    cursor: pointer;
-    white-space: nowrap;
     font-size: 14px;
+	    line-height: 1; 
 }
 
 .year-item:hover {
@@ -905,10 +930,24 @@ header {
 }
 
 #year-prev, #year-next {
-    border: none;
-    background: #000099;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 50%;
-    cursor: pointer;
-}*/
+	margin-top:0;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.format-tag {
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.format-tag.upcoming {
+  background-color: #e53935; /* red */
+  color: #fff;
+}
