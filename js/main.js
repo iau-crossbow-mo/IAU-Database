@@ -61,7 +61,7 @@ function renderClubFlag(clubName) {
                  style="width:24px; height:16px; vertical-align:middle; margin-right:6px;"> 
             ${clubName}`;
 }*/
-
+/*
 function renderClubFlag(clubName) {
     if (!clubName) return "";
 
@@ -74,6 +74,41 @@ function renderClubFlag(clubName) {
         </span>
     `;
 }
+*//*
+function renderClubFlag(athlete) {
+    if (!athlete?.club) return "";
+
+    const clubLogoPath = `photos/clubs/${encodeURIComponent(athlete.club)}.png`;
+    const countryLogoPath = `photos/clubs/${athlete.country.toUpperCase()}.png`;
+
+    return `
+        <span style="display:inline-flex; align-items:center; gap:6px; line-height:1;">
+            <img src="${clubLogoPath}" 
+                 alt="${athlete.club}" 
+                 style="width:24px; height:16px; object-fit:cover; display:block;"
+                 onerror="this.onerror=null; this.src='${countryLogoPath}';">
+            <span>${athlete.club}</span>
+        </span>
+    `;
+}*/
+
+function renderClubFlag(club, country) {
+    if (!club) return "";
+
+    const clubLogoPath = `photos/clubs/${encodeURIComponent(club)}.png`;
+    const countryLogoPath = `photos/clubs/${country?.toUpperCase()}.png`;
+
+    return `
+        <span style="display:inline-flex; align-items:center; gap:6px; line-height:1;">
+            <img src="${clubLogoPath}" 
+                 alt="${club}" 
+                 style="width:24px; height:16px; object-fit:cover; display:block;"
+                 onerror="this.onerror=null; this.src='${countryLogoPath}';">
+            <span>${club}</span>
+        </span>
+    `;
+}
+
 const CATEGORY_NAMES = {
     A: "Absolute",
     O: "Open Class",
@@ -817,7 +852,7 @@ function renderAffiliation(athlete, competition) {
         if (!athlete.club) return "";
 
         return `<a href="club.html?club=${encodeURIComponent(athlete.club)}">
-                    ${renderClubFlag(athlete.club)}
+                    ${renderClubFlag(athlete.club, athlete.country)}
                 </a>`;
     }
 
@@ -1894,7 +1929,7 @@ Object.keys(byYear)
             let clubHTML = `
                 <strong>Club:</strong>
                 <a href="club.html?club=${encodeURIComponent(mainClub)}">
-                    ${renderClubFlag(mainClub)}
+                    ${renderClubFlag(athlete.club, athlete.country)}
                 </a>
             `;
 
@@ -2708,7 +2743,7 @@ function initRandomButtons() {
 
     const randomCompetitionBtn = document.getElementById("random-competition");
     const randomAthleteBtn = document.getElementById("random-athlete");
-
+/*
     if (randomAthleteBtn) {
     parseCSV("data/athletes.csv", athletes => {
         parseCSV("data/results.csv", results => {
@@ -2728,6 +2763,116 @@ function initRandomButtons() {
 
                 const random =
                     validAthletes[Math.floor(Math.random() * validAthletes.length)];
+
+                window.location.href = `athlete.html?id=${random.athlete_id}`;
+            });
+        });
+    });
+}
+*/
+if (randomAthleteBtn) {
+    parseCSV("data/athletes.csv", athletes => {
+        parseCSV("data/results.csv", results => {
+
+            const athletesWithResults = new Set(
+                results.map(r => r.athlete_id)
+            );
+
+            const validAthletes = athletes.filter(a =>
+                a.athlete_name &&
+                a.athlete_name !== "-" &&
+                resolveAthleteId(a.athlete_id) === a.athlete_id
+            );
+
+            // =========================
+            // BUILD COUNTRY COUNTS
+            // =========================
+            const countryCounts = {};
+            validAthletes.forEach(a => {
+                if (!a.country) return;
+                countryCounts[a.country] = (countryCounts[a.country] || 0) + 1;
+            });
+
+            // =========================
+            // SPLIT COUNTRIES
+            // =========================
+            const SMALL_THRESHOLD = 5;
+
+            const smallCountries = [];
+            const normalCountries = [];
+
+            Object.entries(countryCounts).forEach(([c, count]) => {
+                if (count < SMALL_THRESHOLD) smallCountries.push(c);
+                else normalCountries.push(c);
+            });
+
+            // =========================
+            // SIMPLE QUALITY WEIGHT
+            // =========================
+            function getWeight(a) {
+                let score = 1;
+
+                // has results
+                if (athletesWithResults.has(a.athlete_id)) score += 2;
+
+                // has photo (cheap check)
+                const img = new Image();
+                img.src = `photos/athletes/${a.athlete_id}.png`;
+                if (img.complete) score += 2;
+
+                return score;
+            }
+
+            function pickWeighted(list) {
+                const weights = list.map(getWeight);
+                const total = weights.reduce((a,b) => a+b, 0);
+
+                let rand = Math.random() * total;
+
+                for (let i = 0; i < list.length; i++) {
+                    rand -= weights[i];
+                    if (rand <= 0) return list[i];
+                }
+
+                return list[0];
+            }
+
+            // =========================
+            // CLICK
+            // =========================
+            randomAthleteBtn.addEventListener("click", () => {
+                if (!validAthletes.length) return;
+
+                // ---- pick country or pool
+                let selected;
+
+                if (smallCountries.length && Math.random() < 0.2) {
+                    // 20% chance → small pool
+                    selected = "SMALL_POOL";
+                } else {
+                    selected =
+                        normalCountries[
+                            Math.floor(Math.random() * normalCountries.length)
+                        ];
+                }
+
+                // ---- build athlete pool
+                let pool;
+
+                if (selected === "SMALL_POOL") {
+                    pool = validAthletes.filter(a =>
+                        smallCountries.includes(a.country)
+                    );
+                } else {
+                    pool = validAthletes.filter(a =>
+                        a.country === selected
+                    );
+                }
+
+                if (!pool.length) return;
+
+                // ---- pick athlete (weighted)
+                const random = pickWeighted(pool);
 
                 window.location.href = `athlete.html?id=${random.athlete_id}`;
             });
