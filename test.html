@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yearly Ranking Test</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background: #f5f5f5;
+        }
+
+        .tab-btn.active {
+            background: #333;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            white-space: pre-wrap;
+            background: #fafafa;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Unofficial Yearly Rankings Test</h1>
+
+<button onclick="runTest()">Generate Rankings</button>
+
+<div class="tabs" id="tabs"></div>
+
+<div id="contents"></div>
+
+<script src="js/test.js"></script>
+
+</body>
+</html>
