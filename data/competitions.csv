@@ -133,7 +133,7 @@ CE2005NED;Van Gogh Bokaal;NED;Zundert;IC;10.8.2005;IR900
 ECH2005NED;7th IAU European Championships;NED;Zundert;CCH;13.8.2005;IR1800F
 NC2005SUI;Swiss National Championships;SUI;First;NC;10.9.2005;IR900
 LTI2005POZ;Invitational Tournament;CRO;Pozega;LT;25.9.2005;IR600F
-LT2005ZGK;Zagreb Cup Indoor;CRO;Zagreb;LT;2.10.2005;IR900
+LT2007ZGK;Zagreb Cup;CRO;Zagreb;LT;19.5.2007;IR900
 LTI2005ZGB;Zagreb Cup Indoor;CRO;Zagreb;LT;2.10.2005;IR600F
 NCI2005CRO;Croatian National Championships;CRO;Vrbovec;NC;16.10.2005;IR1200F
 ECI2005RUS;2nd IAU European Indoor Championships;RUS;Moscow;CCH;14.11.2005;IR1200F
@@ -149,7 +149,7 @@ BC2006CZE;8th Bohemia Cup;CZE;Otrokovice;IC;9.7.2006;IR1800F
 NC2006SUI;Swiss National Championships;SUI;First;NC;5.8.2006;IR900
 CE2006AUT;Styria Cup;AUT;Steyr;IC;24.8.2006;IR900
 WCH2006AUT;13th IAU World Championships;AUT;Steyr;WCH;26.8.2006;IR1800F
-LT2006POZ;Invitational Tournament;CRO;Pozega;LT;1.10.2006;IR900
+LT2006POZ;Invitational Tournament;CRO;Ivanic Grad;LT;21.5.2006;IR900
 LTI2006POZ;Invitational Tournament;CRO;Pozega;LT;1.10.2006;IR600F
 IC2006ESB;1st Europa Cup;CRO;Slavonski Brod;IC;12.11.2006;IR1200F
 NCI2006CRO;Croatian National Championships;CRO;Slavonski Brod;NC;12.11.2006;IR1200F
@@ -471,7 +471,6 @@ NC2020FIN;Finnish National Championships;FIN;Helsinki;NC;8.8.2020;IR900
 CC2020VTR;25th Croatia Cup;CRO;Veliko Trgovisce;IC;9.8.2020;IR900
 BC2020CZE;22nd Bohemia Cup;CZE;Otrokovice;IC;16.8.2020;IR900
 NC2020CZE;Czech National Championships;CZE;Plumlov;NC;12.9.2020;IR900
-NC2020CZE;Czech National Championships (Missing);CZE;Plumlov;NC;13.9.2020;IR900
 NC2020AUT;Austrian National Championships;AUT;Graschnitz;NC;13.9.2020;IR900
 IC2020ESB;15th Europa Cup;CRO;Slavonski Brod;IC;11.10.2020;IR600
 NCI2020CRO;Croatian National Championships;CRO;Donja Stubica;NC;11.10.2020;IR600
@@ -495,7 +494,6 @@ NC2021EST;Estonian National Championship;EST;Maetaguse;NC;15.8.2021;IR1800
 LT2021GRA;Austria Regional Cup;AUT;Graschnitz;LT;21.8.2021;IR1800
 NC2021GER;German National Championship;GER;Kronau;NC;18.9.2021;IR900
 LT2021PLM;Outdoor Tournament;CZE;Plumlov;LT;19.9.2021;IR900
-LT2021KDS;Donja Stubica Cup;CRO;Donja Stubica;LT;19.9.2021;IR900
 LTI2021KDS;City Cup of Donja Stubica;CRO;Donja Stubica;LT;19.9.2021;IR600
 HO2021HUN;Hungarian Open;HUN;Budakeszi;IC;26.9.2021;IR1800
 LT2021MBK;Bedrich Korbar Memorial;CZE;Plumlov;LT;9.10.2021;IR900
@@ -670,8 +668,8 @@ NCI2026CZE;Czech National Championships;CZE;Suche Lazce;NC;8.3.2026;IR1200
 NCI2026EST;Estonian National Championship;EST;Haademeeste;NC;4.4.2026;IR600
 NCI2026FIN;Finnish National Championships;FIN;Jarvenpaa;NC;19.4.2026;IR600
 LT2026LTL;Outdoor Tournament;CZE;Litultovice;LT;25.4.2026;IR900
-NJCI2026CRO;Croatian Junior National Championships;CRO;Dubrava;NC;2.5.2026;Upcoming
-NCI2026CRO;Croatian National Championships;CRO;Dubrava;NC;3.5.2026;Upcoming
+NJCI2026CRO;Croatian Junior National Championships;CRO;Dubrava;NC;2.5.2026;Live
+NCI2026CRO;Croatian National Championships;CRO;Dubrava;NC;3.5.2026;Live
 HO2026HUN;Hungarian Open;HUN;Budapest;IC;10.5.2026;Upcoming
 LT2026SHL;Outdoor Tournament;CZE;Suche Lazce;LT;16.5.2026;Upcoming
 LT2026VIL;Viljandi District Open Championships;EST;Kulmallika;LT;17.5.2026;Upcoming

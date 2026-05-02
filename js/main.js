@@ -518,7 +518,13 @@ if (rawFormat.toLowerCase() === "upcoming") {
     tag.className = "format-tag upcoming";
     tag.textContent = "Upcoming";
     tdFormat.appendChild(tag);
-} else {
+} else if(rawFormat.toLowerCase() === "live"){
+	const tag = document.createElement("span");
+    tag.className = "format-tag upcoming";
+    tag.textContent = "Live";
+    tdFormat.appendChild(tag);
+}
+else{
     // normal text
     if (matchplayCompetitions.has(comp.comp_id)) {
         formatText += " + Match Play";
