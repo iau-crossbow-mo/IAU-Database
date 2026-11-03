@@ -284,10 +284,13 @@ LTI2012KPZ;Pozega Cup;CRO;Pozega;LT;4.3.2012;IR900i
 NCI2012CRO;Croatian National Championships;CRO;Pozega;NC;25.3.2012;IR1200F
 NCI2012EST;Estonian National Championship;EST;Viljandi;NC;7.4.2012;IR600
 NCI2012FIN;Finnish National Championships;FIN;Maunula;NC;14.4.2012;IR600
+LT2012LTL;Outdoor Tournament;CZE;Litultovice;LT;28.4.2012;IR900
 LT2012WUT;Wuttemberg Regional Championship;GER;Freudenstadt;LT;5.5.2012;IR900
 IC2012GER;Mehrlanderkampf;GER;Stuttgart;IC;19.5.2012;IR1800
+LT2012OST;Outdoor Tournament;CZE;Ostrava;LT;26.5.2012;IR900
 LT2012VTR;VT Cup;CRO;Veliko Trgovisce;LT;27.5.2012;IR900
 AO2012AUT;3. Austria Open;AUT;Innsbruck;IC;9.6.2012;IR1800
+LT2012KOS;Outdoor Tournament;CZE;Kostelec na Hane;LT;9.6.2012;IR900
 NC2012FRA;French National Championships;FRA;Parthenay;NC;16.6.2012;IR1800
 NC2012AUT;Austrian National Championships;AUT;Stockerau;NC;23.6.2012;IR900
 CC2012BRA;17th Croatia Cup;CRO;Bratina;IC;24.6.2012;IR1800F
@@ -298,18 +301,29 @@ NC2012GER;German National Championship;GER;Winsen/Luhe;NC;21.7.2012;IR900
 WHC2012GER;Winsener-Heide Cup;GER;Winsen/Luhe;IC;22.7.2012;IR1800
 LT2012WIN;German WCH Qualifications;GER;Winsen/Luhe;LT;22.7.2012;IR1800
 NC2012CRO;Croatian National Championships;CRO;Malinska;NC;29.7.2012;IR1800F
+NC2012CZE;Czech National Championships;CZE;Litultovice;NC;12.8.2012;IR1800
 CE2012CRO;Kras Cup;CRO;Bratina;IC;14.8.2012;IR900
 WCH2012CRO;16th IAU World Championships;CRO;Bratina;WCH;18.8.2012;IR1800F
+LT2012SHL;Outdoor Tournament;CZE;Suche Lazce;LT;15.9.2012;IR900
+LT2012OTR;Outdoor Tournament;CZE;Otrokovice;LT;6.10.2012;IR900
 IC2012ESB;7th Europa Cup;CRO;Slavonski Brod;IC;7.10.2012;IR1200
+LTI2012KOS;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;17.11.2012;IR600
+LTI2012KOS2;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;8.12.2012;IR600
 LT2012NAP;Bullseye Tournament;FIN;Jarvenpaa;LT;9.12.2012;IR600
+LTI2013KOS;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;5.1.2013;IR600
 NCI2013FRA;French National Championships;FRA;Chateroux;NC;12.2.2013;IR600F
+LTI2013KOS2;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;2.3.2013;IR600
 LTI2013KPZ;Pozega Cup;CRO;Pozega;LT;3.3.2013;IR900i
+NCI2013CZE;Czech National Championship;CZE;Kostelec na Hane;NC;31.3.2013;IR1200
 NCI2013EST;Estonian National Championship;EST;Haademeeste;NC;6.4.2013;IR600
 NCI2013CRO;Croatian National Championships;CRO;Dubrava;NC;7.4.2013;IR1200F
 NCI2013FIN;Finnish National Championships;FIN;Maunula;NC;14.4.2013;IR600
+LT2013LTL;Outdoor Tournament;CZE;Litultovice;LT;27.4.2013;IR900
 IC2013AUT;International Competition;AUT;Stockerau;IC;11.5.2013;IR1800F
 LT2013VTR;VT Cup;CRO;Veliko Trgovisce;LT;18.5.2013;IR900
+LT2013OST;Outdoor Tournament;CZE;Ostrava;LT;18.5.2013;IR900
 AO2013AUT;4. Austria Open;AUT;Innsbruck;IC;2.6.2013;IR1800
+LT2013SHL;Outdoor Tournament;CZE;Suche Lazce;LT;8.6.2013;IR900
 LT2013SIH;Sihtung;GER;Hannover;LT;9.6.2013;IR1800
 NC2013FRA;French National Championships;FRA;Chatenoy-le-Royal;NC;16.6.2013;IR1800
 CC2013IVA;18th Croatia Cup;CRO;Ivanic Grad;IC;23.6.2013;IR1800F
@@ -322,43 +336,67 @@ NC2013RUS;Russian National Championships;RUS;Stavropol;NC;20.7.2013;IR1800F
 SRH2013GER;Hausen Cup;GER;Hausen;IC;28.7.2013;IR1800
 NC2013GER;German National Championship;GER;Hausen;NC;28.7.2013;IR900
 LT2013DBR;16. Kup Dubrave;CRO;Dubrava;LT;4.8.2013;IR1800
+LT2013LTL2;Outdoor Tournament;CZE;Litultovice;LT;10.8.2013;IR900
 CE2013AUT;City Cup of Innsbruck;AUT;Innsbruck;IC;3.9.2013;IR900
 ECH2013AUT;11th IAU European Championships;AUT;Innsbruck;CCH;8.9.2013;IR1800F
+LT2013KOS;Outdoor Tournament;CZE;Kostelec na Hane;LT;13.9.2013;IR900
 NC2013AUT;Austrian National Championships;AUT;Stockerau;NC;29.9.2013;IR900
+LT2013SHL2;Outdoor Tournament;CZE;Suche Lazce;LT;5.10.2013;IR900
 IC2013ESB;8th Europa Cup;CRO;Slavonski Brod;IC;13.10.2013;IR1200
 NCI2013BEL;Belgian National Championships;BEL;Brugge;NC;9.11.2013;IR600
+LTI2013KOS3;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;9.11.2013;IR600
+LTI2013KOS4;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;7.12.2013;IR600
+LTI2014KOS;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;18.1.2014;IR600
 NCI2014FRA;French National Championships;FRA;Besancon;NC;8.2.2014;IR600F
+LTI2014KOS2;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;15.2.2014;IR600
+LTI2014KOS3;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;1.3.2014;IR600
 IC2014GER;Eurocup Hannover;GER;Hannover;IC;9.3.2014;IR1200
 LTI2014KPZ;Pozega Cup;CRO;Pozega;LT;9.3.2014;IR900i
 NCI2014CRO;Croatian National Championships;CRO;Pisarovina;NC;6.4.2014;IR1200F
 NCI2014FIN;Finnish National Championships;FIN;Maunula;NC;12.4.2014;IR600
+LT2014LTL;Outdoor Tournament;CZE;Litultovice;LT;26.4.2014;IR900
 LT2014SIH;Sihtung;GER;Winsen/Luhe;LT;4.5.2014;IR1800
 LT2014VTR;VT Cup;CRO;Veliko Trgovisce;LT;18.5.2014;IR900
+LT2014LTL2;Outdoor Tournament;CZE;Litultovice;LT;31.5.2014;IR900
 LT2014FIN;Ruskeasuo Tournament;FIN;Helsinki;LT;8.6.2014;IR900
 LT2014KRO;German WCH Qualifications;GER;Kronau;LT;8.6.2014;IR1800
 NC2014FRA;French National Championships;FRA;Doullens;NC;15.6.2014;IR1800
+LT2014CPK;Outdoor Tournament;CZE;Cechy pod Kosirem;LT;21.6.2014;IR900
 AO2014AUT;5. Austria Open;AUT;Innsbruck;IC;22.6.2014;IR1800
 NC2014BEL;Belgian National Championships;BEL;Brugge;NC;28.6.2014;IR900
 CC2014IVA;19th Croatia Cup;CRO;Ivanic Grad;LT;29.6.2014;IR1800F
 BC2014CZE;16th Bohemia Cup;CZE;Otrokovice;IC;6.7.2014;IR1800
 NC2014AUT;Austrian National Championships;AUT;Stockerau;NC;7.7.2014;IR900
 LT2014DBR;17. Kup Dubrave;CRO;Dubrava;LT;13.7.2014;IR1800
+SRH2014GER;Hausen Cup;GER;Hausen;IC;13.7.2014;IR900
 NC2014FIN;Finnish National Championships;FIN;Helsinki;NC;20.7.2014;IR1800
 NC2014CRO;Croatian National Championships;CRO;Pozega;NC;20.7.2014;IR1800F
 NC2014GER;German National Championship;GER;Hannover;NC;26.7.2014;IR900
+NC2014CZE;Czech National Championships;CZE;Suche Lazce;NC;27.7.2014;IR1800
 CE2014GER;Frankfurt Cup;GER;Frankfurt am Main;IC;5.8.2014;IR900
 WCH2014GER;17th IAU World Championships;GER;Frankfurt am Main;WCH;10.8.2014;IR1800F
+LT2014LTL3;Outdoor Tournament;CZE;Litultovice;LT;16.8.2014;IR900
+LT2014OTR;Outdoor Tournament;CZE;Otrokovice;LT;13.9.2014;IR900
 NCI2014BEL;Belgian National Championships;BEL;Brugge;NC;4.10.2014;IR600
+LT2014SHL;Outdoor Tournament;CZE;Suche Lazce;LT;11.10.2014;IR900
 IC2014ESB;9th Europa Cup;CRO;Slavonski Brod;IC;12.10.2014;IR1200
+LTI2014KOS4;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;22.11.2014;IR600
+LTI2014KOS5;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;6.12.2014;IR600
 LT2014NAP;Bullseye Tournament;FIN;Jarvenpaa;LT;14.12.2014;IR600
+LTI2015KOS;Indoor Tournament;CZE;Kostelec na Hane;LT;24.1.2015;IR600
 NCI2015FRA;French National Championships;FRA;Agen;NC;7.2.2015;IR600F
+LTI2015OTR;Indoor Tournament;CZE;Otrokovice;LT;21.2.2015;IR600
 LTI2015KPZ;Pozega Cup;CRO;Pozega;LT;8.3.2015;IR900i
+NCI2015CZE;Outdoor Tournament;CZE;Kostelec na Hane;NC;22.3.2015;IR1200
 NCI2015CRO;Croatian National Championships;CRO;Malinska;NC;29.3.2015;IR1200F
 NCI2015EST;Estonian National Championship;EST;Haademeeste;NC;4.4.2015;IR600
 NCI2015FIN;Finnish National Championships;FIN;Maunula;NC;11.4.2015;IR600
 LT2015SIH;Sihtung;GER;Hausen;LT;25.4.2015;IR1800
+LT2015LTL;Outdoor Tournament;CZE;Litultovice;LT;25.4.2015;IR900
 LT2015VTR;VT Cup;CRO;Veliko Trgovisce;LT;23.5.2015;IR900
+LT2015LTL2;Outdoor Tournament;CZE;Litultovice;LT;23.5.2015;IR900
 LT2015HAN;German WCH Qualifications;GER;Hannover;LT;31.5.2015;IR1800
+LT2015SHL;Outdoor Tournament;CZE;Suche Lazce;LT;6.6.2015;IR900
 AO2015AUT;6. Austria Open;AUT;Innsbruck;IC;7.6.2015;IR1800
 LT2015FIN;Ruskeasuo Tournament;FIN;Helsinki;LT;7.6.2015;IR900
 NC2015FRA;French National Championships;FRA;Beaulieu;NC;14.6.2015;IR1800
@@ -370,24 +408,35 @@ LT2015DBR;18. Kup Dubrave;CRO;Dubrava;LT;12.7.2015;IR1800
 NC2015RUS;Russian National Championships;RUS;Stavropol;NC;13.7.2015;IR1800F
 LT2015WUT;Wuttemberg Regional Championship;GER;Freudenstadt;LT;13.7.2015;IR900
 NC2015CRO;Croatian National Championships;CRO;Ivanic Grad;NC;26.7.2015;IR1800F
+NC2015CZE;Outdoor Tournament;CZE;Cechy pod Kosirem;NC;26.7.2015;IR1800
 NC2015FIN;Finnish National Championships;FIN;Heinola;NC;2.8.2015;IR900
+LT2015LTL3;Outdoor Tournament;CZE;Litultovice;LT;8.8.2015;IR900
 CE2015RUS;Baikal Cup;RUS;Ulan-Ude;IC;20.8.2015;IR900
 WCH2015RUS;18th IAU World Championships;RUS;Ulan-Ude;WCH;24.8.2015;IR1800F
 NC2015GER;German National Championship;GER;Munich;NC;7.9.2015;IR900
 NC2015AUT;Austrian National Championships;AUT;Stockerau;NC;12.9.2015;IR900
+LT2015OTR;Outdoor Tournament;CZE;Otrokovice;LT;12.9.2015;IR900
+LT2015SHL2;Outdoor Tournament;CZE;Suche Lazce;LT;3.10.2015;IR900
 IC2015ESB;10th Europa Cup;CRO;Slavonski Brod;IC;4.10.2015;IR1200
 NCI2015BEL;Belgian National Championships;BEL;Brugge;NC;10.10.2015;IR600
+LTI2015KOS2;Indoor Tournament;CZE;Kostelec na Hane;LT;14.10.2015;IR600
+LTI2015SHL;Indoor Tournament;CZE;Suche Lazce;LT;5.12.2015;IR600
 LT2015NAP;Bullseye Tournament;FIN;Jarvenpaa;LT;13.12.2015;IR600
+LTI2016OTR;Indoor Tournament;CZE;Otrokovice;LT;16.1.2016;IR600
 NCI2016FRA;French National Championships;FRA;Tarbes;NC;13.2.2016;IR600F
+LTI2016KOS;Indoor Tournament;CZE;Kostelec na Hane;LT;13.2.2016;IR600
 LTI2016KPZ;Pozega Cup;CRO;Pozega;LT;6.3.2016;IR900i
 NCI2016CRO;Croatian National Championships;CRO;Pozega;NC;20.3.2016;IR1200F
 NCI2016EST;Estonian National Championship;EST;Haademeeste;NC;2.4.2016;IR600
 NCI2016FIN;Finnish National Championships;FIN;Maunula;NC;9.4.2016;IR600
+LT2016LTL;Outdoor Tournament;CZE;Litultovice;LT;23.4.2016;IR900
 IC2016FRA;Nations Cup;FRA;Thaon-les-Vosges;IC;8.5.2016;IR1800F
+LT2016SHL;Outdoor Tournament;CZE;Suche Lazce;LT;21.5.2016;IR900
 LT2016POZ;City Cup of Bakar;CRO;Bakar;LT;27.5.2016;IR900
 LT2016DBR;19. Kup Dubrave;CRO;Dubrava;LT;5.6.2016;IR1800
 NC2016FRA;French National Championships;FRA;Thaon-les-Vosges;NC;12.6.2016;IR1800
 LT2016FIN;Ruskeasuo Tournament;FIN;Helsinki;LT;16.6.2016;IR900
+LT2016CPK;Outdoor Tournament;CZE;Cechy pod Kosirem;LT;18.6.2016;IR900
 NC2016CRO;Croatian National Championships;CRO;Dubrava;NC;19.6.2016;IR1800F
 CC2016VTR;21st Croatia Cup;CRO;Veliko Trgovisce;IC;26.6.2016;IR1800
 NC2016RUS;Russian National Championships;RUS;Moscow;NC;26.6.2016;IR1800F
@@ -397,9 +446,12 @@ CE2016SUI;Zurich Cup;SUI;Zurich;IC;10.7.2016;IR900
 LT2016HES;Hessen Regional Championship;GER;Frankfurt;LT;13.7.2016;IR900
 ECH2016SUI;12th IAU European Championships;SUI;Zurich;CCH;14.7.2016;IR1800F
 BC2016CZE;18th Bohemia Cup;CZE;Otrokovice;IC;31.7.2016;IR1800
+NC2016CZE;Outdoor Tournament;CZE;Litultovice;NC;7.8.2016;IR1800
 NC2016FIN;Finnish National Championships;FIN;Heinola;NC;21.8.2016;IR1800
 NC2016GER;German National Championship;GER;Munich;NC;5.9.2016;IR900
+LT2016OTR;Outdoor Tournament;CZE;Otrokovice;LT;10.9.2016;IR900
 IC2016ESB;11th Europa Cup;CRO;Slavonski Brod;IC;18.9.2016;IR1200
+LT2016SHL2;Outdoor Tournament;CZE;Suche Lazce;LT;1.10.2016;IR900
 NC2016AUT;Austrian National Championships;AUT;Stockerau;NC;2.10.2016;IR900
 NCI2016BEL;Belgian National Championships;BEL;Brugge;NC;8.10.2016;IR600
 LT2016MBR;Berislav Rajkovic Memorial;CRO;Ivanic Grad;LT;20.11.2016;IR900i
@@ -659,6 +711,7 @@ LT2024HES;Hessen Regional Championship;GER;Frankfurt;LT;2.5.2024;IR900
 LT2024SHL;Outdoor Tournament;CZE;Suche Lazce;LT;18.5.2024;IR900
 LT2024MFS;Frantisek Sedlacek Memorial;CZE;Kostelec na Hane;LT;1.6.2024;IR900
 LT2024POZ;Invitational Tournament;CRO;Veliko Trgovisce;LT;2.6.2024;IR900
+HO2024HUN;Hungarian Open;HUN;Budapest;IC;2.6.2024;IR1800
 NC2024FRA;French National Championships;FRA;Bar-le-Duc;NC;9.6.2024;IR900
 LT2024DBR1;27. Kup Dubrave (Day 1);CRO;Dubrava;LT;15.6.2024;IR900
 LT2024DBR2;27. Kup Dubrave (Day 2);CRO;Dubrava;LT;16.6.2024;IR900
@@ -753,57 +806,4 @@ NC2026CZE;Czech National Championship;CZE;Otrokovice;NC;5.9.2026;IR900
 LT2026HAA;Haademeeste Open Championship;EST;Haademeeste;LT;12.9.2026;Upcoming
 LT2026MBK;Bedrich Korbar Memorial;CZE;Plumlov;LT;3.10.2026;IR900
 LT2026MBR;18. Berislav Rajkovic Memorial;CRO;Ivanic Grad;LT;18.10.2026;IR600
-WCF2026EST;IAU World Cup Finals;EST;Haademeeste;WC;31.10.2026;Upcoming
-LT2012LTL;Outdoor Tournament;CZE;Litultovice;LT;28.4.2012;IR900
-LT2012OST;Outdoor Tournament;CZE;Ostrava;LT;26.5.2012;IR900
-LT2012KOS;Outdoor Tournament;CZE;Kostelec na Hane;LT;9.6.2012;IR900
-NC2012CZE;Czech National Championships;CZE;Litultovice;NC;12.8.2012;IR1800
-LT2012SHL;Outdoor Tournament;CZE;Suche Lazce;LT;15.9.2012;IR900
-LT2012OTR;Outdoor Tournament;CZE;Otrokovice;LT;6.10.2012;IR900
-LTI2012KOS;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;17.11.2012;IR600
-LTI2012KOS2;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;8.12.2012;IR600
-LTI2013KOS;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;5.1.2013;IR600
-LTI2013KOS2;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;2.3.2013;IR600
-NCI2013CZE;Czech National Championship;CZE;Kostelec na Hane;NC;31.3.2013;IR1200
-LT2013LTL;Outdoor Tournament;CZE;Litultovice;LT;27.4.2013;IR900
-LT2013OST;Outdoor Tournament;CZE;Ostrava;LT;18.5.2013;IR900
-LT2013SHL;Outdoor Tournament;CZE;Suche Lazce;LT;8.6.2013;IR900
-LT2013LTL2;Outdoor Tournament;CZE;Litultovice;LT;10.8.2013;IR900
-LT2013KOS;Outdoor Tournament;CZE;Kostelec na Hane;LT;13.9.2013;IR900
-LT2013SHL2;Outdoor Tournament;CZE;Suche Lazce;LT;5.10.2013;IR900
-LTI2013KOS3;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;9.11.2013;IR600
-LTI2013KOS4;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;7.12.2013;IR600
-LTI2014KOS;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;18.1.2014;IR600
-LTI2014KOS2;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;15.2.2014;IR600
-LTI2014KOS3;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;1.3.2014;IR600
-LT2014LTL;Outdoor Tournament;CZE;Litultovice;LT;26.4.2014;IR900
-LT2014LTL2;Outdoor Tournament;CZE;Litultovice;LT;31.5.2014;IR900
-LT2014CPK;Outdoor Tournament;CZE;Cechy pod Kosirem;LT;21.6.2014;IR900
-NC2014CZE;Czech National Championships;CZE;Suche Lazce;NC;27.7.2014;IR1800
-LT2014LTL3;Outdoor Tournament;CZE;Litultovice;LT;16.8.2014;IR900
-LT2014OTR;Outdoor Tournament;CZE;Otrokovice;LT;13.9.2014;IR900
-LT2014SHL;Outdoor Tournament;CZE;Suche Lazce;LT;11.10.2014;IR900
-LTI2014KOS4;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;22.11.2014;IR600
-LTI2014KOS5;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;6.12.2014;IR600
-LTI2015KOS;Indoor Tournament;CZE;Kostelec na Hane;LT;24.1.2015;IR600
-LTI2015OTR;Indoor Tournament;CZE;Otrokovice;LT;21.2.2015;IR600
-NCI2015CZE;Outdoor Tournament;CZE;Kostelec na Hane;NC;22.3.2015;IR1200
-LT2015LTL;Outdoor Tournament;CZE;Litultovice;LT;25.4.2015;IR900
-LT2015LTL2;Outdoor Tournament;CZE;Litultovice;LT;23.5.2015;IR900
-LT2015SHL;Outdoor Tournament;CZE;Suche Lazce;LT;6.6.2015;IR900
-NC2015CZE;Outdoor Tournament;CZE;Cechy pod Kosirem;NC;26.7.2015;IR1800
-LT2015LTL3;Outdoor Tournament;CZE;Litultovice;LT;8.8.2015;IR900
-LT2015OTR;Outdoor Tournament;CZE;Otrokovice;LT;12.9.2015;IR900
-LT2015SHL2;Outdoor Tournament;CZE;Suche Lazce;LT;3.10.2015;IR900
-LTI2015KOS2;Indoor Tournament;CZE;Kostelec na Hane;LT;14.10.2015;IR600
-LTI2015SHL;Indoor Tournament;CZE;Suche Lazce;LT;5.12.2015;IR600
-LTI2016OTR;Indoor Tournament;CZE;Otrokovice;LT;16.1.2016;IR600
-LTI2016KOS;Indoor Tournament;CZE;Kostelec na Hane;LT;13.2.2016;IR600
-LT2016LTL;Outdoor Tournament;CZE;Litultovice;LT;23.4.2016;IR900
-LT2016SHL;Outdoor Tournament;CZE;Suche Lazce;LT;21.5.2016;IR900
-LT2016CPK;Outdoor Tournament;CZE;Cechy pod Kosirem;LT;18.6.2016;IR900
-NC2016CZE;Outdoor Tournament;CZE;Litultovice;NC;7.8.2016;IR1800
-LT2016OTR;Outdoor Tournament;CZE;Otrokovice;LT;10.9.2016;IR900
-LT2016SHL2;Outdoor Tournament;CZE;Suche Lazce;LT;1.10.2016;IR900
-SRH2014GER;Hausen Cup;GER;Hausen;IC;13.7.2014;IR900
-HO2024HUN;Hungarian Open;HUN;Budapest;IC;2.6.2024;IR1800
+WCF2026EST;IAU World Cup Finals;EST;Haademeeste;WC;31.10.2026;IR300
