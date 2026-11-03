@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iau-crossbow-mo.github.io/IAU-Database/sitemap.xml

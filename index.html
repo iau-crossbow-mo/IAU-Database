@@ -1,14 +1,55 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Competitions</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IAU Crossbow Database | Competitions, Athletes & World Rankings</title>
+
+<meta name="description"
+content="Explore the IAU Crossbow Database featuring international crossbow competitions, championship results, athletes, national federations, clubs and world rankings.">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical"
+href="https://iau-crossbow-mo.github.io/IAU-Database/">
+
+<meta property="og:title"
+content="IAU Crossbow Database | Competitions & World Rankings">
+
+<meta property="og:description"
+content="Explore international crossbow competitions, athletes, national federations and world rankings in the IAU Crossbow Database.">
+
+<meta property="og:url"
+content="https://iau-crossbow-mo.github.io/IAU-Database/">
+
+<meta property="og:type" content="website">
+
 <link rel="stylesheet" href="css/style.css">
-	<link rel="icon" href="favicon.ico">
 </head>
+
 <body>
 
-<h1>Main Dashboard</h1>
+<h1>IAU Crossbow Database</h1>
+
+<!-- SEO INTRODUCTION -->
+<div class="seo-intro">
+  <h2>International Crossbow Competitions and Rankings</h2>
+
+  <p>
+    The IAU Crossbow Database is a platform dedicated to
+    international crossbow shooting competitions, athletes,
+    clubs and national federations.
+  </p>
+
+  <p>
+    Explore historical competition results, athlete
+    performances, world rankings and international
+    crossbow shooting events.
+  </p>
+</div>
 
 <div class="tabs">
   <button id="tab-competitions" class="tab-button active">Competitions</button>
@@ -26,13 +67,14 @@
     <button id="random-competition" class="tag-action">Random Competition</button>
   </div>
 
-	<div class="year-nav-wrapper">
-  <button id="year-prev" class="tab-button">◀</button>
-<div id="year-item" class="year-item"></div>
-  <button id="year-next" class="tab-button">▶</button>
-</div>
-<!--<div id="year-scroll" class="year-scroll"></div>-->
-	
+  <div class="year-nav-wrapper">
+    <button id="year-prev" class="tab-button">◀</button>
+    <div id="year-item" class="year-item"></div>
+    <button id="year-next" class="tab-button">▶</button>
+  </div>
+
+  <!--<div id="year-scroll" class="year-scroll"></div>-->
+
   <div id="competition-list"></div>
 
 </div>
@@ -51,12 +93,6 @@
 <div id="athletes-tab" style="display:none;">
   <div id="athletes-container"></div>
 </div>
-
-
-
-
-
-
 
 <!-- Overlay -->
 <div id="filter-overlay" class="filter-overlay hidden"></div>
@@ -95,6 +131,7 @@
 <!--
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 -->
+
 <script src="js/papaparse.min.js"></script>
 <script src="js/main.js"></script>
 
