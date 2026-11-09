@@ -195,7 +195,10 @@ for url in sorted(urls):
 
 tree = ElementTree(root)
 
-ElementTree.indent(tree, space="  ")
+try:
+    ElementTree.indent(tree, space="  ")
+except AttributeError:
+    pass
 
 tree.write(
     OUTPUT_FILE,
