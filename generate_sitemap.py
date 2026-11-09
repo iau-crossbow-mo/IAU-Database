@@ -29,11 +29,22 @@ STATIC_PAGES = [
 # CSV READER
 # =====================================
 
+
 def read_csv(filename):
     path = os.path.join(DATA_DIR, filename)
 
-    with open(path, "r", encoding="utf-8-sig", newline="") as f:
-        return list(csv.DictReader(f, delimiter=";"))
+    # First try UTF-8
+    try:
+        with open(path, "r", encoding="utf-8-sig", newline="") as f:
+            return list(csv.DictReader(f, delimiter=";"))
+
+    # If UTF-8 fails, try Windows-1252
+    except UnicodeDecodeError:
+        print(f"UTF-8 decoding failed for {filename}. Trying Windows-1252.")
+
+        with open(path, "r", encoding="cp1252", newline="") as f:
+            return list(csv.DictReader(f, delimiter=";"))
+
 
 
 # =====================================
