@@ -1526,6 +1526,13 @@ function loadAthletePage() {
 
     const requestedId = getQueryParam("id");
     if (!requestedId) return;
+	// Set canonical URL for individual athlete
+const canonical = document.getElementById("canonical-url");
+
+if (canonical && requestedId) {
+    canonical.href =
+        `https://iau-crossbow-mo.github.io/IAU-Database/athlete.html?id=${encodeURIComponent(requestedId)}`;
+}
 
     Promise.all([
         new Promise(r => parseCSV("data/athletes.csv", r)),
@@ -1571,7 +1578,10 @@ function loadAthletePage() {
             athletes.find(a => allIds.has(a.athlete_id));
 
         if (!athlete) return;
-
+		
+		document.title =
+    `${athlete.athlete_name} | IAU Crossbow Database`;
+		
         // =========================
         // RESULTS (ALL IDS)
         // =========================
@@ -1589,6 +1599,23 @@ function loadAthletePage() {
 		const athleteMatchResults = matchResults.filter(r =>
 			allIds.has(r.athlete1_id) || allIds.has(r.athlete2_id)
 		);	
+		
+		
+function setMetaDescription(content) {
+    let meta = document.querySelector('meta[name="description"]');
+
+    if (!meta) {
+        meta = document.createElement("meta");
+        meta.name = "description";
+        document.head.appendChild(meta);
+    }
+
+    meta.content = content;
+}
+
+setMetaDescription(
+    `${athlete.athlete_name} - Crossbow athlete profile featuring competition results, international performances and IAU world rankings.`
+);		
 		
 function renderAthleteMatches() {
 
@@ -2616,6 +2643,13 @@ function loadWorldRankingPage() {
     const compId = params.get("id");
 
     if (!compId) return;
+
+	const canonical = document.getElementById("canonical-url");
+
+if (canonical) {
+    canonical.href =
+        `https://iau-crossbow-mo.github.io/IAU-Database/world_ranking.html?id=${encodeURIComponent(compId)}`;
+}
 
     parseCSV("data/world_ranking.csv", rankings => {
         parseCSV("data/athletes.csv", athletes => {
