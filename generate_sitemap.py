@@ -1,21 +1,30 @@
 
 import csv
 import os
-from urllib.parse import urlencode
+from datetime import datetime, timezone
+from urllib.parse import urlencode, quote
 from xml.etree.ElementTree import (
-    Element, SubElement, ElementTree
+    Element,
+    SubElement,
+    ElementTree,
+    register_namespace,
+    parse,
 )
 
-# =====================================
+# ==================================================
 # CONFIGURATION
-# =====================================
+# ==================================================
 
 BASE_URL = "https://iau-crossbow-mo.github.io/IAU-Database/"
 
 DATA_DIR = "data"
 OUTPUT_FILE = "sitemap.xml"
 
-# Static pages to include
+SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
+
+register_namespace("", SITEMAP_NS)
+
+# Static pages
 STATIC_PAGES = [
     "index.html",
     "athlete.html",
@@ -25,173 +34,260 @@ STATIC_PAGES = [
     "club.html",
 ]
 
-# =====================================
+# ==================================================
 # CSV READER
-# =====================================
-
+# ==================================================
 
 def read_csv(filename):
     path = os.path.join(DATA_DIR, filename)
 
-    # First try UTF-8
-    try:
-        with open(path, "r", encoding="utf-8-sig", newline="") as f:
-            return list(csv.DictReader(f, delimiter=";"))
+    if not os.path.isfile(path):
+        print(f"WARNING: {filename} not found. Skipping.")
+        return []
 
-    # If UTF-8 fails, try Windows-1252
-    except UnicodeDecodeError:
-        print(f"UTF-8 decoding failed for {filename}. Trying Windows-1252.")
+    for encoding in ("utf-8-sig", "cp1252"):
+        try:
+            with open(
+                path,
+                "r",
+                encoding=encoding,
+                newline=""
+            ) as file:
+                return list(
+                    csv.DictReader(file, delimiter=";")
+                )
 
-        with open(path, "r", encoding="cp1252", newline="") as f:
-            return list(csv.DictReader(f, delimiter=";"))
+        except UnicodeDecodeError:
+            continue
 
-
-
-# =====================================
-# URL BUILDER
-# =====================================
-
-urls = set()
-
-def add_url(path):
-    urls.add(BASE_URL + path)
-
-
-def add_query_url(page, parameter, value):
-    query = urlencode({parameter: value})
-    add_url(f"{page}?{query}")
+    raise ValueError(
+        f"Unable to decode CSV file: {filename}"
+    )
 
 
-# =====================================
+# ==================================================
+# HELPER FUNCTIONS
+# ==================================================
+
+urls = {}
+
+def clean(value):
+    """Normalize CSV values."""
+    if value is None:
+        return ""
+    return str(value).strip()
+
+
+def add_url(path, source_files=None):
+    """Add a URL without duplicates."""
+
+    url = BASE_URL + path
+
+    if url not in urls:
+        urls[url] = set()
+
+    if source_files:
+        urls[url].update(source_files)
+
+
+def add_query_url(page, parameter, value, source_file=None):
+    """Create an encoded parameter-based URL."""
+
+    value = clean(value)
+
+    if not value:
+        return
+
+    query = urlencode(
+        {parameter: value},
+        quote_via=quote
+    )
+
+    add_url(
+        f"{page}?{query}",
+        [source_file] if source_file else None
+    )
+
+
+def latest_modification(source_files):
+    """Return the latest modification date of source CSVs."""
+
+    timestamps = []
+
+    for filename in source_files:
+        path = os.path.join(DATA_DIR, filename)
+
+        if os.path.isfile(path):
+            timestamps.append(os.path.getmtime(path))
+
+    if not timestamps:
+        return None
+
+    latest = max(timestamps)
+
+    return datetime.fromtimestamp(
+        latest,
+        tz=timezone.utc
+    ).date().isoformat()
+
+
+# ==================================================
+# LOAD DATABASE
+# ==================================================
+
+athletes = read_csv("athletes.csv")
+aliases = read_csv("athlete_aliases.csv")
+competitions = read_csv("competitions.csv")
+rankings = read_csv("world_ranking.csv")
+
+
+# ==================================================
 # STATIC PAGES
-# =====================================
+# ==================================================
 
 for page in STATIC_PAGES:
     add_url(page)
 
 
-# =====================================
-# ATHLETES AND ALIASES
-# =====================================
-
-athletes = read_csv("athletes.csv")
-aliases = read_csv("athlete_aliases.csv")
+# ==================================================
+# ATHLETES
+# ==================================================
 
 alias_ids = {
-    row["alias_id"].strip()
+    clean(row.get("alias_id"))
     for row in aliases
-    if row.get("alias_id", "").strip()
+    if clean(row.get("alias_id"))
 }
 
-athlete_ids = set()
-
-for athlete in athletes:
-    athlete_id = athlete.get("athlete_id", "").strip()
-
-    if athlete_id and athlete_id not in alias_ids:
-        athlete_ids.add(athlete_id)
-
-for athlete_id in athlete_ids:
-    add_query_url("athlete.html", "id", athlete_id)
-
-
-# =====================================
-# COMPETITIONS
-# =====================================
-
-competitions = read_csv("competitions.csv")
-
-competition_ids = {
-    row["comp_id"].strip()
-    for row in competitions
-    if row.get("comp_id", "").strip()
-}
-
-for comp_id in competition_ids:
-    add_query_url("competition.html", "id", comp_id)
-
-
-# =====================================
-# WORLD RANKINGS
-# =====================================
-
-rankings = read_csv("world_ranking.csv")
-
-ranking_ids = {
-    row["comp_id"].strip()
-    for row in rankings
-    if row.get("comp_id", "").strip()
-}
-
-for comp_id in ranking_ids:
-    add_query_url("world_ranking.html", "id", comp_id)
-
-
-# =====================================
-# NATIONAL FEDERATIONS
-# =====================================
-
-countries = {
-    row["country"].strip()
+athlete_ids = {
+    clean(row.get("athlete_id"))
     for row in athletes
-    if row.get("country", "").strip()
+    if clean(row.get("athlete_id"))
+    and clean(row.get("athlete_id")) not in alias_ids
 }
 
-for country in countries:
+for athlete_id in sorted(athlete_ids):
     add_query_url(
-        "national_federation.html",
-        "country",
-        country
+        "athlete.html",
+        "id",
+        athlete_id,
+        "athletes.csv"
     )
 
 
-# =====================================
-# CLUBS
-# =====================================
+# ==================================================
+# COMPETITIONS
+# ==================================================
 
-clubs = {
-    row["club"].strip()
-    for row in athletes
-    if row.get("club", "").strip()
-    and row["club"].strip() != "-"
+competition_ids = {
+    clean(row.get("comp_id"))
+    for row in competitions
+    if clean(row.get("comp_id"))
 }
 
-for club in clubs:
-    add_query_url("club.html", "club", club)
+for comp_id in sorted(competition_ids):
+    add_query_url(
+        "competition.html",
+        "id",
+        comp_id,
+        "competitions.csv"
+    )
 
 
-# =====================================
+# ==================================================
+# WORLD RANKINGS
+# ==================================================
+
+ranking_ids = {
+    clean(row.get("comp_id"))
+    for row in rankings
+    if clean(row.get("comp_id"))
+}
+
+for comp_id in sorted(ranking_ids):
+    add_query_url(
+        "world_ranking.html",
+        "id",
+        comp_id,
+        "world_ranking.csv"
+    )
+
+
+# ==================================================
+# NATIONAL FEDERATIONS
+# ==================================================
+
+countries = {
+    clean(row.get("country"))
+    for row in athletes
+    if clean(row.get("country"))
+}
+
+for country in sorted(countries):
+    add_query_url(
+        "national_federation.html",
+        "country",
+        country,
+        "athletes.csv"
+    )
+
+
+# ==================================================
+# CLUBS
+# ==================================================
+
+clubs = {
+    clean(row.get("club"))
+    for row in athletes
+    if clean(row.get("club"))
+    and clean(row.get("club")) not in ("-", "N/A", "NULL")
+}
+
+for club in sorted(clubs):
+    add_query_url(
+        "club.html",
+        "club",
+        club,
+        "athletes.csv"
+    )
+
+
+# ==================================================
 # GENERATE XML
-# =====================================
-
-namespace = "http://www.sitemaps.org/schemas/sitemap/0.9"
-
-Element(
-    "urlset",
-    xmlns=namespace
-)
+# ==================================================
 
 root = Element(
-    f"{{{namespace}}}urlset"
+    f"{{{SITEMAP_NS}}}urlset"
 )
 
 for url in sorted(urls):
+
     entry = SubElement(
         root,
-        f"{{{namespace}}}url"
+        f"{{{SITEMAP_NS}}}url"
     )
 
     loc = SubElement(
         entry,
-        f"{{{namespace}}}loc"
+        f"{{{SITEMAP_NS}}}loc"
     )
 
     loc.text = url
 
+    # Add lastmod only when source data is known.
+    lastmod = latest_modification(urls[url])
 
-# =====================================
-# SAVE
-# =====================================
+    if lastmod:
+        lastmod_element = SubElement(
+            entry,
+            f"{{{SITEMAP_NS}}}lastmod"
+        )
+        lastmod_element.text = lastmod
+
+
+# ==================================================
+# SAVE XML
+# ==================================================
 
 tree = ElementTree(root)
 
@@ -202,10 +298,23 @@ except AttributeError:
 
 tree.write(
     OUTPUT_FILE,
-    encoding="utf-8",
+    encoding="UTF-8",
     xml_declaration=True
 )
 
-print("Sitemap successfully generated!")
+
+# ==================================================
+# VALIDATE OUTPUT
+# ==================================================
+
+parse(OUTPUT_FILE)
+
+print()
+print("======================================")
+print("SITEMAP SUCCESSFULLY GENERATED")
+print("======================================")
 print(f"Total URLs: {len(urls)}")
-print(f"Output: {OUTPUT_FILE}")
+print(f"Output file: {OUTPUT_FILE}")
+print(f"Base URL: {BASE_URL}")
+print("XML validation: PASSED")
+print("======================================")
