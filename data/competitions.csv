@@ -791,7 +791,6 @@ LT2026DBR;29. Kup Dubrave (Day 1);CRO;Nova Kapela;LT;13.6.2026;IR900
 LT2026DBR2;29. Kup Dubrave (Day 2);CRO;Nova Kapela;LT;14.6.2026;IR900
 WC2026CZE;IAU World Cup;CZE;Kostelec na Hane;WC;26.6.2026;IR900
 MC2026CZE;3rd Moravia Cup;CZE;Kostelec na Hane;IC;27.6.2026;IR900
-NC2026AUT;Austrian National Championships;AUT;Graschnitz;NC;3.7.2026;Cancelled
 NJC2026CRO;Croatian Junior National Championships;CRO;Veliko Trgovisce;NC;4.7.2026;IR900
 NC2026CRO;Croatian National Championships;CRO;Ivanic Grad;NC;11.7.2026;IR900
 WC2026CRO;IAU World Cup;CRO;Veliko Trgovisce;WC;17.7.2026;IR900
@@ -800,10 +799,29 @@ NC2026EST;Estonian National Championship;EST;Pannjarve;NC;25.7.2026;IR900
 LT2026LTL2;Outdoor Tournament;CZE;Litultovice;LT;1.8.2026;IR900
 CE2026FRA;Chateauroux City Cup;FRA;Chateroux;IC;4.8.2026;IR900
 ECH2026FRA;15th IAU European Championships;FRA;Chateroux;CCH;6.8.2026;IR900
-NC2026GER;German National Championship;GER;-;NC;20.8.2026;Upcoming
-LT2026PAR;Parnu Championship;EST;Haademeeste;LT;29.8.2026;Upcoming
+LT2026PAR;Parnu Championship;EST;Haademeeste;LT;29.8.2026;IR900
 NC2026CZE;Czech National Championship;CZE;Otrokovice;NC;5.9.2026;IR900
-LT2026HAA;Haademeeste Open Championship;EST;Haademeeste;LT;12.9.2026;Upcoming
+LT2026HAA;Haademeeste Open Championship;EST;Haademeeste;LT;12.9.2026;IR900
 LT2026MBK;Bedrich Korbar Memorial;CZE;Plumlov;LT;3.10.2026;IR900
 LT2026MBR;18. Berislav Rajkovic Memorial;CRO;Ivanic Grad;LT;18.10.2026;IR600
 WCF2026EST;IAU World Cup Finals;EST;Haademeeste;WC;31.10.2026;IR300
+LTI2026KOS2;Kostelec Indoor Tournament;CZE;Kostelec na Hane;LT;21.11.2026;Upcoming
+LTI2026SHL;Indoor Tournament;CZE;Suche Lazce;LT;5.12.2026;Upcoming
+LTI2026CEN;National Evaluations;FRA;Chateroux;LT;6.12.2026;Upcoming
+LTI2027DBR;Dubrava Trophy;CRO;Dubrava;LT;10.1.2027;Upcoming
+NCI2027FRA;French National Championships;FRA;Chalons en Champagne;NC;8.2.2027;Upcoming
+ECHI2027FRA;4th IAU European Indoor Championships;FRA;Chalons en Champagne;ECH;13.2.2027;Upcoming
+NCI2027CZE;Czech National Championships;CZE;Kostelec na Hane;NC;6.3.2027;Upcoming
+NCI2027CRO;Croatian National Championships;CRO;Veliko Trgovisce;NC;1.5.2027;Upcoming
+NJCI2027CRO;Croatian Junior National Championships;CRO;Veliko Trgovisce;NC;2.5.2027;Upcoming
+NJC2027CRO;Croatian Junior National Championships;CRO;Krusljevo Selo;NC;29.5.2027;Upcoming
+NC2027FRA;French National Championships;FRA;Bischwiller;NC;5.6.2027;Upcoming
+LT2027DBR;30. Kup Dubrave;CRO;Dubrava;LT;5.6.2027;Upcoming
+NC2027CRO;Croatian National Championships;CRO;Klanjec;NC;20.6.2027;Upcoming
+WC2027CZE;IAU World Cup;CZE;Kostelec na Hane;WC;26.6.2027;Upcoming
+MC2027CZE;4th Moravia Cup;CZE;Kostelec na Hane;IC;27.6.2027;Upcoming
+WCH2027EST;24th IAU World Championships;EST;Parnu;WCH;5.7.2027;Upcoming
+WC2027CRO;IAU World Cup;CRO;Veliko Trgovisce;WC;16.7.2027;Upcoming
+CC2027VTR;32nd Croatia Cup;CRO;Veliko Trgovisce;IC;18.7.2027;Upcoming
+WCF2027CRO;IAU World Cup Finals;CRO;Veliko Trgovisce;WCF;20.7.2027;Upcoming
+LT2027MBR;19. Berislav Rajkovic Memorial;CRO;Ivanic Grad;LT;17.10.2027;Upcoming
