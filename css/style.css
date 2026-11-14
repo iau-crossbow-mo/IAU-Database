@@ -83,6 +83,21 @@ a{
 	/*border-radius:10px;*/
 }
 
+.seo-header {
+    display: flex;
+    align-items: left;
+    
+	flex-direction: column;
+    /*margin-bottom: 24px;*/
+	background-color: #000099;
+	color: #ffffff;
+	padding-left:20px;
+	border-radius:10px;
+}
+
+.seo-header h1,h2,p{
+	color: white;
+}
 
 
 header {
